@@ -26,3 +26,5 @@ export const currState = {
   STUDENT: 2,
   UNPROTECTED: 3,
 };
+
+export const genders = ["Male", "Female"];
