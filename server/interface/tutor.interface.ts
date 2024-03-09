@@ -1,5 +1,4 @@
 import { Document, ObjectId } from "mongoose";
-import { Language } from "./interface";
 
 interface PriceList {
     minutes: number;
@@ -14,7 +13,7 @@ export default interface TutorInterface extends Document {
     gender: string;
     classesTaken: [ObjectId];
     isProfileUpdated: boolean;
-    languages: [Language],
+    languages: [string],
     availableTimeZone: [string],
     prices: [PriceList],
 }

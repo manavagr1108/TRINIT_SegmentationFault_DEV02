@@ -34,7 +34,7 @@ const StudentSchema = new Schema<StudentInterface>({
     },
     languages: {
         type: [
-            { language: String, experience: String }
+            String
         ],
         default: []
     },
