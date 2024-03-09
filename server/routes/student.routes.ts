@@ -1,7 +1,7 @@
 import express from "express";
-import { getCurrentStudentDetails } from "../controllers/student.controller";
+import { getCurrentStudentDetails, updateProfile } from "../controllers/student.controller";
 const studentRouter = express.Router();
 
 studentRouter.get("/getDetails", getCurrentStudentDetails);
-
+studentRouter.post("/updateProfile", updateProfile);
 export default studentRouter;
