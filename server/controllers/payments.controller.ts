@@ -37,6 +37,11 @@ export const orderForBookingTutor = async (
         if (!tutor) {
             return res.status(403).json({ message: "Tutor not found" });
         }
+
+        const checkClass = await PaymentModel.findOne({ tutorId: tutorId, studentId: req.studentId, language: language });
+        if (checkClass) {
+            return res.status(403).json({ message: "You have already booked this session before" });
+        }
         const checkValidity = tutor.languages.find((elem) => elem.language == language && elem.price == price);
         if (!checkValidity) {
             return res.status(403).json({ message: "Price and language not matched for the current tutor" });
@@ -111,8 +116,8 @@ export const paymentCallback = async (req: Request, res: Response) => {
             orderModelId: orderModel._id,
             razorpayPaymentId: razorpay_payment_id,
             tutorId: orderModel.tutorId,
-            studentId: orderModel.studentId
-
+            studentId: orderModel.studentId,
+            language: orderModel.language
         });
         await paymentModel.save();
 

@@ -22,6 +22,10 @@ const OrderSchema = new Schema<PaymentInterface>({
         type: Types.ObjectId,
         default: "",
         refs: "OrderModel"
+    },
+    language: {
+        type: String,
+        default: ""
     }
 })
 

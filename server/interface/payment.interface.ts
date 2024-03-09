@@ -4,4 +4,5 @@ export default interface OrderInterface extends Document {
     razorpayPaymentId: string;
     tutorId: ObjectId;
     studentId: ObjectId;
+    language: string;
 }
