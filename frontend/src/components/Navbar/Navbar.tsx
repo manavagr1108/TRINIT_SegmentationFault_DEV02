@@ -13,6 +13,7 @@ const Navbar = ({
   const { isLoggedIn, isProfileUpdated } = currentPath.includes("tutor")
     ? useAuthTutor()
     : useAuthStudent();
+  console.log(isLoggedIn, isProfileUpdated);
   return (
     <Flex className=" max-w-[20%] w-[15rem] h-[100vh] fixed overflow-hidden">
       {isLoggedIn == true ? (

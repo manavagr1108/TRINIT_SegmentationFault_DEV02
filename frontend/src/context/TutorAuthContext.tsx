@@ -28,6 +28,7 @@ export const AuthContextProviderTutor = ({ children }: { children: any }) => {
       if (loggedInResponse.status === 200) {
         setLoggedIn(true);
         setTutor(loggedInResponse.data.data);
+        setIsProfileUpdated(loggedInResponse.data.data.isProfileUpdated);
       } else {
         setLoggedIn(false);
         setTutor(undefined);

@@ -154,3 +154,13 @@ export const paymentCallback = async (body: any) => {
     return e.response;
   }
 }
+export const getRegisteredStudents = async () => {
+  try {
+    const response = await CustomAxios.get(`tutor/registeredStudents`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}

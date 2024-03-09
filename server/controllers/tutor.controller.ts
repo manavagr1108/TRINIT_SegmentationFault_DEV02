@@ -32,7 +32,6 @@ export const getCurrentTutorDetails = async (
     }
 };
 
-
 export const updateProfile = async (
     req: RequestWithAuthenticatedTutor,
     res: Response
@@ -63,10 +62,12 @@ export const updateProfile = async (
                 age: age,
                 languages: languages || [],
                 isProfileUpdated: true,
-                availableTimeZone: timezone
+                availableTimeZone: timezone,
             },
         });
-        return res.status(200).json({ message: "Profile updated successfully" });
+        return res
+            .status(200)
+            .json({ message: "Profile updated successfully" });
     } catch (err: any) {
         logger.warn(
             JSON.stringify({

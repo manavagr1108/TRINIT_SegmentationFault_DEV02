@@ -5,6 +5,7 @@ import "./App.css";
 import { ErrorBoundary } from "react-error-boundary";
 import { FallbackUi } from "./pages";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
 import { BrowserRouter } from "react-router-dom";
