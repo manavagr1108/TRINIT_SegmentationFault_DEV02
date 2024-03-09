@@ -51,7 +51,6 @@ function UpdateStudentDetails(student: any) {
     if (updateProfileForm.validate().hasErrors) {
       return;
     }
-    console.log(updateProfileForm.values.languages);
     const response = await updateUserProfile({
       name: updateProfileForm.values.name,
       email: updateProfileForm.values.email,
@@ -87,9 +86,6 @@ function UpdateStudentDetails(student: any) {
       <Text ta="center" fw={500} size="lg">
         Update Your Details
       </Text>
-      <form
-        onSubmit={updateProfileForm.onSubmit((values) => console.log(values))}
-      >
         <TextInput
           withAsterisk
           label="Name"
@@ -126,7 +122,6 @@ function UpdateStudentDetails(student: any) {
         <Group justify="center" mt="md">
           <Button onClick={updateProfile} type="submit">Submit</Button>
         </Group>
-      </form>
     </Box>
   );
 }

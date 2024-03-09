@@ -8,9 +8,11 @@ import {
   Select,
   Text,
 } from "@mantine/core";
-import { IconBookUpload, IconLanguage } from "@tabler/icons-react";
+import { IconBookUpload } from "@tabler/icons-react";
 import React from "react";
-import { expArray } from "../../utils/helpers";
+import { expArray, showNotification } from "../../utils/helpers";
+import { paymentCallback, prepareOrder } from "../../utils/apiCalls";
+import { RAZORPAY_KEY_ID } from "../../../config";
 function removeDuplicateStrings(arr: string[]) {
   var uniqueSet = new Set(arr);
   var uniqueArray = Array.from(uniqueSet);
@@ -22,7 +24,37 @@ function TutorListItem(data: any) {
   );
   const [languageIndex, setLanguageInde] = React.useState<number>(0);
   const [time, setTime] = React.useState<string>(data.availableTimeZone[0]);
-  const bookTutor = async () => {};
+  const bookTutor = async () => {
+    const response = await prepareOrder({ tutorId: data._id, language: data.languages[languageIndex].language, price: data.languages[languageIndex].price });
+    if (response.status === 200) {
+      const options = {
+        key: RAZORPAY_KEY_ID,
+        amount: response.data.data.amount,
+        currency: "INR",
+        name: "LinguaConnect",
+        order_id: response.data.data.id,
+        theme: {
+          color: "#121212",
+        },
+        handler: async (response: any) => {
+          const res = await paymentCallback({ razorpay_payment_id: response.razorpay_payment_id, razorpay_order_id: response.razorpay_order_id, razorpay_signature: response.razorpay_signature })
+          if (res.status == 200) {
+            showNotification("Success", res.data.message, "success");
+            return;
+          } else {
+            showNotification("Error", res.data.message, "error");
+            return;
+          }
+        }
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
+      return;
+    } else {
+      showNotification("Error", response.data.message, "error");
+      return;
+    }
+  };
   return (
     <Flex
       justify="space-between"

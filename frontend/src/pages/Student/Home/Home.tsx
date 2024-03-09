@@ -12,7 +12,6 @@ import React from "react";
 
 const Home = ({ children }: { children: React.ReactElement }) => {
   const { student } = useAuthStudent();
-  console.log(student);
   const { isProfileUpdated } = useAuthStudent();
 
   const cloneChildWithProp = React.cloneElement(children, student);

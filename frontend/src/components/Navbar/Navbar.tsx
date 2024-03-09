@@ -13,16 +13,13 @@ const Navbar = ({
   unprotectedNavLinks: { name: string; link: string }[];
 }) => {
   const currentPath = useLocation().pathname;
-  console.log(useLocation().pathname);
   const { isLoggedIn, isProfileUpdated } = useAuthStudent();
-  console.log(isLoggedIn, isProfileUpdated);
   return (
     <Flex className=" max-w-[20%] w-[15rem] h-[100vh] fixed overflow-hidden">
       {isLoggedIn == true ? (
         <Flex direction="column" className="border-x-2 w-full shadow-sm h-full">
           {isProfileUpdated == true &&
             loggedInNavLinks.map((navLink, i) => {
-              console.log(navLink);
               return (
                 <Link to={navLink.link} key={i}>
                   {navLink.link.toLocaleLowerCase() === currentPath.toLocaleLowerCase() ? (

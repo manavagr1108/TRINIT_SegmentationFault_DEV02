@@ -128,3 +128,29 @@ export const searchTutor = async (body: {
     return e.response;
   }
 };
+
+export const prepareOrder = async (body: {
+  tutorId: string,
+  price: number,
+  language: string,
+}) => {
+  try {
+    const response = await CustomAxios.post(`payment/generateOrder`, body, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
+
+export const paymentCallback = async (body: any) => {
+  try {
+    const response = await CustomAxios.post(`payment/callback`, body, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}

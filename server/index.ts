@@ -9,7 +9,7 @@ import cors from "cors";
 import connectDatabase from "./utils/connectDatabase";
 import config from "./config/config";
 import morgan from "morgan";
-import { authRouter, studentRouter, tutorRouter } from "./routes/index.routes";
+import { authRouter, studentRouter, tutorRouter, paymentRouter } from "./routes/index.routes";
 import {
     authenticateTokenTutor,
     authenticateStudentToken,
@@ -40,6 +40,8 @@ app.use(
 app.use("/auth", authRouter);
 app.use("/student", authenticateStudentToken, studentRouter);
 app.use("/tutor", authenticateTokenTutor, tutorRouter);
+app.use("/payment", paymentRouter);
+
 
 app.listen(config.port, () => {
     console.log(`Server running on port ${config.port}`);

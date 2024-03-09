@@ -3,7 +3,6 @@ import { IconLanguage } from "@tabler/icons-react";
 import React from "react";
 
 function SearchButton(data: any) {
-  console.log(data);
   return (
     <Flex justify="space-between">
       <Flex direction="column">

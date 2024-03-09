@@ -39,7 +39,6 @@ function SearchTutor() {
       return;
     }
     setLoading(true);
-    console.log(languages, experience, priceRange[0], priceRange[1]);
     const response = await searchTutor({
       languages,
       experience,

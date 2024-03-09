@@ -13,7 +13,6 @@ import useAuthTutor from "../../../context/TutorAuthContext";
 
 const Home = ({ children }: { children: React.ReactElement }) => {
   const { student,isProfileUpdated } = useAuthTutor();
-  console.log(student);
   const navigate = useNavigate();
   const { setType } = useRouteTypeContext();
 
