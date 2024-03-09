@@ -40,3 +40,5 @@ export const languages = [
   "Hindi",
   "Korean",
 ];
+export const expArray = ["low", "medium", "high"];
+

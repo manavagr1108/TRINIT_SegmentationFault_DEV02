@@ -20,7 +20,6 @@ import useAuthStudent from "../../../context/StudentAuthContext";
 import useRouteTypeContext from "../../../context/RouteTypeContext";
 
 function UpdateStudentDetails(student: any) {
-  console.log(student);
   const navigate = useNavigate();
   const { setIsProfileUpdated } = useAuthStudent();
   const { setType } = useRouteTypeContext();

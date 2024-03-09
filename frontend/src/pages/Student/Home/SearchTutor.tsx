@@ -7,6 +7,7 @@ import {
   Group,
   Input,
   InputBase,
+  Loader,
   MultiSelect,
   RangeSlider,
   Select,
@@ -20,20 +21,24 @@ import React, { useState } from "react";
 import SearchButton from "../../../components/SearchButton/SearchButton";
 import {
   languages as LANGUAGES,
+  expArray,
   showNotification,
 } from "../../../utils/helpers";
 import { searchTutor } from "../../../utils/apiCalls";
+import TutorListItem from "../../../components/Card/TutorListItem";
 
 function SearchTutor() {
-  const expArray = ["low", "medium", "high"];
   const [languages, setLanguages] = useState<string[]>([]);
   const [experience, setExperience] = useState<number>(0);
-  const [priceRange, setPriceRange] = useState<[number, number]>([100, 5000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([5000, 20000]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tutorsList, setTutorsList] = useState<any[]>();
   const handleSearch = async () => {
     if (languages.length === 0) {
       showNotification("Error", "select atleast one language", "error");
       return;
     }
+    setLoading(true);
     console.log(languages, experience, priceRange[0], priceRange[1]);
     const response = await searchTutor({
       languages,
@@ -42,20 +47,25 @@ function SearchTutor() {
       upperPrice: priceRange[1],
     });
     if (response.status === 200) {
-      console.log(response);
+      setTutorsList(response.data.data);
+      setLoading(false);
+    } else {
     }
   };
 
   return (
-    <Flex direction="column" className="w-fit">
-      <Stack className="border-2 border-blue-400 rounded-lg p-6">
+    <Flex
+      direction="column"
+      className="w-full items-center justify-evenly gap-2"
+    >
+      <Stack className="border-2 overflow-auto border-blue-400 rounded-lg p-6">
         <MultiSelect
           label="Languages"
           withAsterisk
           placeholder="Select known languages"
           data={LANGUAGES}
           onChange={(v) => setLanguages(v)}
-          maw={400}
+          maxDropdownHeight={200}
         />
         <Select
           label="Experience"
@@ -79,6 +89,20 @@ function SearchTutor() {
         />
         <Button onClick={handleSearch}>Search Tutor</Button>
       </Stack>
+      <Flex
+        direction="column"
+        gap={2}
+        className="w-full items-center justify-evenly overflow-auto"
+      >
+        List of available tutors:
+        {loading === true ? (
+          <Loader />
+        ) : (
+          tutorsList?.map((tutor, index) => (
+            <TutorListItem key={index} {...tutor} />
+          ))
+        )}
+      </Flex>
     </Flex>
   );
 }
