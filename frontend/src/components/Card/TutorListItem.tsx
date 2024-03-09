@@ -25,7 +25,11 @@ function TutorListItem(data: any) {
   const [languageIndex, setLanguageInde] = React.useState<number>(0);
   const [time, setTime] = React.useState<string>(data.availableTimeZone[0]);
   const bookTutor = async () => {
-    const response = await prepareOrder({ tutorId: data._id, language: data.languages[languageIndex].language, price: data.languages[languageIndex].price });
+    const response = await prepareOrder({
+      tutorId: data._id,
+      language: data.languages[languageIndex].language,
+      price: data.languages[languageIndex].price,
+    });
     if (response.status === 200) {
       const options = {
         key: RAZORPAY_KEY_ID,
@@ -37,7 +41,11 @@ function TutorListItem(data: any) {
           color: "#121212",
         },
         handler: async (response: any) => {
-          const res = await paymentCallback({ razorpay_payment_id: response.razorpay_payment_id, razorpay_order_id: response.razorpay_order_id, razorpay_signature: response.razorpay_signature })
+          const res = await paymentCallback({
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          });
           if (res.status == 200) {
             showNotification("Success", res.data.message, "success");
             return;
@@ -45,7 +53,7 @@ function TutorListItem(data: any) {
             showNotification("Error", res.data.message, "error");
             return;
           }
-        }
+        },
       };
       const razor = new window.Razorpay(options);
       razor.open();
@@ -67,7 +75,7 @@ function TutorListItem(data: any) {
             {" - "}
             {
               <NumberFormatter
-                prefix=" $"
+                prefix=" ₹"
                 value={data.languages[languageIndex].price}
                 thousandSeparator
               />

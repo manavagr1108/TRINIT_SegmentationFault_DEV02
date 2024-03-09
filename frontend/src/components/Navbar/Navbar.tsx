@@ -1,10 +1,7 @@
-import { Button, Drawer, Flex } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
 import useAuthStudent from "../../context/StudentAuthContext";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { studentLogout } from "../../utils/apiCalls";
-import { currState, showNotification } from "../../utils/helpers";
-import useRouteTypeContext from "../../context/RouteTypeContext";
-import { IconActivity, IconChevronRight } from "@tabler/icons-react";
+import { Link, useLocation } from "react-router-dom";
+import useAuthTutor from "../../context/TutorAuthContext";
 const Navbar = ({
   loggedInNavLinks,
   unprotectedNavLinks,
@@ -13,7 +10,9 @@ const Navbar = ({
   unprotectedNavLinks: { name: string; link: string }[];
 }) => {
   const currentPath = useLocation().pathname;
-  const { isLoggedIn, isProfileUpdated } = useAuthStudent();
+  const { isLoggedIn, isProfileUpdated } = currentPath.includes("tutor")
+    ? useAuthTutor()
+    : useAuthStudent();
   return (
     <Flex className=" max-w-[20%] w-[15rem] h-[100vh] fixed overflow-hidden">
       {isLoggedIn == true ? (
@@ -22,7 +21,8 @@ const Navbar = ({
             loggedInNavLinks.map((navLink, i) => {
               return (
                 <Link to={navLink.link} key={i}>
-                  {navLink.link.toLocaleLowerCase() === currentPath.toLocaleLowerCase() ? (
+                  {navLink.link.toLocaleLowerCase() ===
+                  currentPath.toLocaleLowerCase() ? (
                     <Button
                       variant="filled"
                       className="hover:tracking-widest hover:text-md m-4 "
@@ -41,10 +41,28 @@ const Navbar = ({
               );
             })}
           {isProfileUpdated == false && (
-            <Link to="/user/updateProfile">
-              <div className="hover:tracking-widest hover:text-md m-4">
-                Profile
-              </div>
+            <Link
+              to={`/${
+                currentPath.includes("tutor") ? "tutor" : "student"
+              }/home`}
+            >
+              {`/${
+                currentPath.includes("tutor") ? "tutor" : "student"
+              }/home` === currentPath.toLocaleLowerCase() ? (
+                <Button
+                  variant="filled"
+                  className="hover:tracking-widest hover:text-md m-4 "
+                >
+                  profile
+                </Button>
+              ) : (
+                <Button
+                  variant="subtle"
+                  className="hover:tracking-widest hover:text-md m-4"
+                >
+                  profile
+                </Button>
+              )}
             </Link>
           )}
         </Flex>
@@ -53,9 +71,22 @@ const Navbar = ({
           {unprotectedNavLinks.map((navLink, i) => {
             return (
               <Link to={navLink.link} key={i}>
-                <div className="hover:tracking-widest hover:text-xl cursor-pointer m-4">
-                  {navLink.name}
-                </div>
+                {navLink.link.toLocaleLowerCase() ===
+                currentPath.toLocaleLowerCase() ? (
+                  <Button
+                    variant="filled"
+                    className="hover:tracking-widest hover:text-md m-4 "
+                  >
+                    {navLink.name}
+                  </Button>
+                ) : (
+                  <Button
+                    variant="subtle"
+                    className="hover:tracking-widest hover:text-md m-4"
+                  >
+                    {navLink.name}
+                  </Button>
+                )}
               </Link>
             );
           })}

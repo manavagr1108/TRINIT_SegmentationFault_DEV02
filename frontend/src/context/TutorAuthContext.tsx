@@ -3,16 +3,17 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { BACKEND_URL } from "../../config";
 import { useLocation } from "react-router-dom";
 
-const AuthContextTutor = createContext<AuthContextTypeStudent>(
-  {} as AuthContextTypeStudent
+const AuthContextTutor = createContext<AuthContextTypeTutor>(
+  {} as AuthContextTypeTutor
 );
 
 export const AuthContextProviderTutor = ({ children }: { children: any }) => {
-  const [student, setStudent] = useState<Student | undefined>(undefined);
+  const [tutor, setTutor] = useState<Tutor | undefined>(undefined);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [fetched, setFetched] = useState<boolean>(false);
+  const [isProfileUpdated, setIsProfileUpdated] = useState<boolean>(false);
   const getLoggedIn = async () => {
     try {
       setLoading(true);
@@ -26,16 +27,16 @@ export const AuthContextProviderTutor = ({ children }: { children: any }) => {
       setError(false);
       if (loggedInResponse.status === 200) {
         setLoggedIn(true);
-        setStudent(loggedInResponse.data.data);
+        setTutor(loggedInResponse.data.data);
       } else {
         setLoggedIn(false);
-        setStudent(undefined);
+        setTutor(undefined);
       }
       setFetched(true);
     } catch (e) {
       setLoggedIn(false);
       setLoading(false);
-      setStudent(undefined);
+      setTutor(undefined);
       setError(true);
       setFetched(true);
     }
@@ -59,13 +60,15 @@ export const AuthContextProviderTutor = ({ children }: { children: any }) => {
 
   const cachedValue = useMemo(
     () => ({
-      student: student,
+      tutor: tutor,
       isLoggedIn: loggedIn,
       isLoading: loading,
       error: error,
       isFetched: fetched,
+      isProfileUpdated: isProfileUpdated,
+      setIsProfileUpdated: setIsProfileUpdated
     }),
-    [student, loggedIn, loading, error]
+    [tutor, loggedIn, loading, error, isProfileUpdated]
   );
   return (
     <AuthContextTutor.Provider value={cachedValue}>

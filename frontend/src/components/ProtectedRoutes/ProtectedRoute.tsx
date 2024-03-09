@@ -5,11 +5,19 @@ import useAuthStudent from "../../context/StudentAuthContext";
 import { showNotification } from "../../utils/helpers";
 const ProtectedRoutes = (props: any) => {
   const { type, children } = props;
-  const { student, isLoggedIn, isFetched, isProfileUpdated } =
+  let user: Student | Tutor | undefined = undefined;
+  const { isLoggedIn, isFetched, isProfileUpdated } =
     type === "student" ? useAuthStudent() : useAuthTutor();
+  if (type === "student") {
+    const { student } = useAuthStudent();
+    user = student;
+  } else {
+    const { tutor } = useAuthTutor();
+    user = tutor;
+  }
   const navigate = useNavigate();
   useEffect(() => {
-    if ((!student || !isLoggedIn) && isFetched) {
+    if ((!user || !isLoggedIn) && isFetched) {
       if (type === "student") {
         navigate("/auth/student");
         return;
@@ -19,7 +27,7 @@ const ProtectedRoutes = (props: any) => {
       }
     }
     if (
-      student &&
+      user &&
       isLoggedIn &&
       isFetched &&
       type == "student" &&
@@ -33,7 +41,7 @@ const ProtectedRoutes = (props: any) => {
       navigate("/student/updateProfile");
       return;
     }
-  }, [student, isLoggedIn, type, isProfileUpdated]);
+  }, [user, isLoggedIn, type, isProfileUpdated]);
 
   return isFetched && children;
 };

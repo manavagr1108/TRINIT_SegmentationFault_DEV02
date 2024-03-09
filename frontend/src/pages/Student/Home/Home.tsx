@@ -16,19 +16,19 @@ const Home = ({ children }: { children: React.ReactElement }) => {
 
   const cloneChildWithProp = React.cloneElement(children, student);
   return (
-    <Flex direction="column" className="h-full justify-start">
+    <Flex direction="column" className="h-full w-[100vw] justify-start">
       <Flex className="h-full justify-start">
         <Navbar
           loggedInNavLinks={loggedInNavLinks}
           unprotectedNavLinks={unprotectedNavLinks}
         />
-        <Flex className="w-full ml-[15rem] py-2 px-10 justify-center items-start">
-          {isProfileUpdated === true ? (
-            cloneChildWithProp
-          ) : (
-            <UpdateStudentDetails {...student} />
-          )}
-        </Flex>
+      </Flex>
+      <Flex className="w-full pl-[15rem] py-2 px-10 justify-center items-start">
+        {isProfileUpdated === true ? (
+          cloneChildWithProp
+        ) : (
+          <UpdateStudentDetails {...student} />
+        )}
       </Flex>
     </Flex>
   );

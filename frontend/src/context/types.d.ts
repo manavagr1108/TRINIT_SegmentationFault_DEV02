@@ -2,9 +2,22 @@ interface Student {
   _id: string;
   name: string;
 }
+interface Tutor {
+  _id: string;
+  name: string;
+}
 
 interface AuthContextTypeStudent {
   student?: Student;
+  isLoggedIn: boolean;
+  isLoading: boolean;
+  error: boolean;
+  isFetched: boolean;
+  isProfileUpdated: boolean;
+  setIsProfileUpdated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+interface AuthContextTypeTutor {
+  tutor?: Tutor;
   isLoggedIn: boolean;
   isLoading: boolean;
   error: boolean;

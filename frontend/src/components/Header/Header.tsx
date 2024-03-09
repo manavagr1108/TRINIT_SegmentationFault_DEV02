@@ -2,7 +2,7 @@ import { Button, Flex, Text } from "@mantine/core";
 import { IconUserCircle } from "@tabler/icons-react";
 import useAuthStudent from "../../context/StudentAuthContext";
 import { studentLogout } from "../../utils/apiCalls";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useRouteTypeContext from "../../context/RouteTypeContext";
 import { currState, showNotification } from "../../utils/helpers";
 import useAuthTutor from "../../context/TutorAuthContext";
@@ -10,9 +10,17 @@ import useAuthTutor from "../../context/TutorAuthContext";
 function Header() {
   const currentPath = useLocation().pathname;
 
-  const { isLoggedIn, student } = currentPath.includes("student")
+  const { isLoggedIn } = currentPath.includes("student")
     ? useAuthStudent()
     : useAuthTutor();
+  let user = undefined;
+  if (currentPath.includes("student")) {
+    const { student } = useAuthStudent();
+    user = student;
+  } else {
+    const { tutor } = useAuthTutor();
+    user = tutor;
+  }
   const navigate = useNavigate();
   const { setType } = useRouteTypeContext();
   const logout = async () => {
@@ -32,7 +40,7 @@ function Header() {
       {isLoggedIn ? (
         <Flex justify="space-evenly" align="center">
           <IconUserCircle size={35} />
-          <Text> Welcome {student?.name}</Text>
+          <Text> Welcome {user?.name}</Text>
         </Flex>
       ) : null}
 
