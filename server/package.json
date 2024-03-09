@@ -38,7 +38,9 @@
         "dev": "nodemon -e .ts --exec \"yarn compile\"",
         "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
         "prepare": "husky install",
-        "checkLogs": "if ! test -d logs;then mkdir logs && touch logs/error.log && touch logs/combined.log && touch logs/warning.log;fi"
+        "checkLogs": "if ! test -d logs;then mkdir logs && touch logs/error.log && touch logs/combined.log && touch logs/warning.log;fi",
+
+        "seedTutor":"tsc && node build/seeders/tutorSeeder.js"
     },
     "lint-staged": {
         "*.{ts,tsx}": [
