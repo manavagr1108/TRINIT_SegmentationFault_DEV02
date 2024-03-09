@@ -185,3 +185,14 @@ export const fetchTutorSlots = async (body: any) => {
     return e.response;
   }
 }
+
+export const bookSlotsApi = async (body: any) => {
+  try {
+    const response = await CustomAxios.post(`student/bookSlot`, body, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}

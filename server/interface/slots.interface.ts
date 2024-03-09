@@ -5,6 +5,6 @@ export default interface SlotInterface extends Document {
     studentId: ObjectId;
     language: string;
     date: Date;
-    timezone: string;
-    time: number;
+    startTime: number;
+    endTime: number;
 }

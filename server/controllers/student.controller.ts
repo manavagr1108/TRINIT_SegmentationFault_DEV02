@@ -212,3 +212,51 @@ export const fetchBookedTutorSlotsOfDate = async (req: RequestWithAuthenticatedS
         return res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export const bookSlots = async (req: RequestWithAuthenticatedStudent, res: Response) => {
+    try {
+        const student = await StudentModel.findById(req.studentId);
+        if (!student) {
+            return res
+                .cookie("token", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        const { tutorId, date, startTime, endTime, language } = req.body;
+        const newDate = new Date(date);
+        endTime
+        if (!isValidObjectId(tutorId)) {
+            return res.status(403).json({ message: "Invalid tutor id" });
+        }
+        if (new Date(date).toString() == new Date("Invalid Date").toString()) {
+            return res.status(403).json({ message: "Invalid date" })
+        }
+
+        const tutorSlots = await SlotModel.find({ tutorId: tutorId, date: newDate });
+        let collision = false;
+        tutorSlots.forEach((val) => {
+            if (val.endTime > startTime && val.startTime < endTime) {
+                collision = true;
+            }
+        })
+        if (collision) {
+            return res.status(403).json({ message: "Overlaps with existig slots" });
+        }
+        const slot = await SlotModel.create({ tutorId: tutorId, studentId: student._id, language: language, endTime: endTime, startTime: startTime, date: newDate });
+        await slot.save();
+        return res.status(200).json({ message: "Slot created successfully" });
+    } catch (err: any) {
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};

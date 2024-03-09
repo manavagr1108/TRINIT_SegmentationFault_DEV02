@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    bookSlots,
     fetchAllTutors,
     fetchBookedTutorSlotsOfDate,
     getCurrentStudentDetails,
@@ -13,5 +14,5 @@ studentRouter.post("/updateProfile", updateProfile);
 studentRouter.post("/searchTutor", searchTutor);
 studentRouter.get("/fetchTutors", fetchAllTutors);
 studentRouter.post("/fetchTutorSlots", fetchBookedTutorSlotsOfDate);
-
+studentRouter.post("/bookSlot", bookSlots);
 export default studentRouter;
