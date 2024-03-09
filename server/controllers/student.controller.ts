@@ -199,7 +199,7 @@ export const fetchBookedTutorSlotsOfDate = async (req: RequestWithAuthenticatedS
         if (new Date(date).toString() == new Date("Invalid Date").toString()) {
             return res.status(403).json({ message: "Invalid date" })
         }
-        const tutorSlots = await SlotModel.find({ tutorId: tutorId, date: newDate, $ne: { studentId: req.studentId } });
+        const tutorSlots = await SlotModel.find({ tutorId: tutorId, date: newDate });
 
         return res.status(200).json({ data: tutorSlots });
     } catch (err: any) {
