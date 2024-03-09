@@ -7,4 +7,5 @@ export default interface SlotInterface extends Document {
     date: Date;
     startTime: number;
     endTime: number;
+    code: number;
 }

@@ -1,6 +1,6 @@
 import { RequestWithAuthenticatedTutor } from "../interface/auth.interface";
 import { Response } from "express";
-import { PaymentModel, StudentModel, TutorModel } from "../models";
+import { PaymentModel, SlotModel, StudentModel, TutorModel } from "../models";
 import logger from "../utils/logger";
 
 export const getCurrentTutorDetails = async (
@@ -119,6 +119,47 @@ export const getRegisteredUsers = async (
             JSON.stringify({
                 message: err.message,
                 trace: "updateProfile",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const fetchUpcomingSlots = async (req: RequestWithAuthenticatedTutor, res: Response) => {
+    try {
+        const student = await StudentModel.findById(req.tutorId);
+        if (!student) {
+            return res
+                .cookie("idToken", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        const tutorSlots = await SlotModel.find({ tutorId: req.tutorId });
+        const date = new Date(new Date().toDateString())
+        const data = tutorSlots.map((val) => {
+            if (new Date(val.date).getTime() >= date.getTime()) {
+                return val;
+            }
+        })
+        const finalData = data.filter((elem) => elem != null && elem != undefined);
+        const tutors = await Promise.all(
+            finalData.map(async (slot) => {
+                const tutor = await StudentModel.findOne({ _id: slot?.studentId });
+                return { student: tutor, slot: slot }
+            })
+        )
+        const finalTutors = tutors.filter((elem) => elem != undefined && elem.student != undefined);
+        return res.status(200).json({ data: finalTutors });
+    } catch (err: any) {
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
             })
         );
         return res.status(500).json({ message: "Internal server error" });
