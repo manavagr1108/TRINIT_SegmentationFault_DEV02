@@ -1,12 +1,14 @@
 import {
   Badge,
+  Button,
   Center,
   Flex,
+  HoverCard,
   NumberFormatter,
   Select,
   Text,
 } from "@mantine/core";
-import { IconLanguage } from "@tabler/icons-react";
+import { IconBookUpload, IconLanguage } from "@tabler/icons-react";
 import React from "react";
 import { expArray } from "../../utils/helpers";
 function removeDuplicateStrings(arr: string[]) {
@@ -20,14 +22,14 @@ function TutorListItem(data: any) {
   );
   const [languageIndex, setLanguageInde] = React.useState<number>(0);
   const [time, setTime] = React.useState<string>(data.availableTimeZone[0]);
-  console.log(data);
+  const bookTutor = async () => {};
   return (
     <Flex
       justify="space-between"
-      className="w-[60%] border-2 border-blue-400 rounded-lg p-6 px-4 py-1"
+      className=" w-max border-2 border-blue-400 rounded-lg p-6 px-4 py-1"
     >
       <Flex direction="column">
-        <Flex gap={2}>
+        <Flex justify="space-between" gap={2}>
           <Flex>
             {data.name}
             {" - "}
@@ -40,6 +42,18 @@ function TutorListItem(data: any) {
             }
             {" - "}
             {expArray[languageIndex]}
+          </Flex>
+          <Flex>
+            <HoverCard width={100} shadow="md">
+              <HoverCard.Target>
+                <Button onClick={bookTutor}>
+                  <IconBookUpload />
+                </Button>
+              </HoverCard.Target>
+              <HoverCard.Dropdown p={0} m={0} className=" text-center">
+                <Text size="sm">Book Tutor</Text>
+              </HoverCard.Dropdown>
+            </HoverCard>
           </Flex>
         </Flex>
         <Flex gap={3} justify={Center} align={Center}>

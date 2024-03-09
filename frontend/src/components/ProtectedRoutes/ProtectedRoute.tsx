@@ -22,7 +22,7 @@ const ProtectedRoutes = (props: any) => {
       student &&
       isLoggedIn &&
       isFetched &&
-      type == "user" &&
+      type == "student" &&
       isProfileUpdated == false
     ) {
       showNotification(
