@@ -18,5 +18,6 @@ export default interface TutorInterface extends Document {
     classesTaken: [ObjectId];
     isProfileUpdated: boolean;
     languages: [LanguagePriceList],
-    availableTimeZone: [string]
+    availableTimeZone: [string],
+    isAutoApprovalOn: boolean;
 }

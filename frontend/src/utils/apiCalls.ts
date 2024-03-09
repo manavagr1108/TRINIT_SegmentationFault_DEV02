@@ -218,3 +218,25 @@ export const getUpcomingClassesStudent = async () => {
     return e.response;
   }
 }
+
+export const toggleAutoApproval = async () => {
+  try {
+    const response = await CustomAxios.get(`tutor/toggleAutoSubmit`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
+
+export const toggleApprovalOfMeet = async (slotId: string) => {
+  try {
+    const response = await CustomAxios.post(`tutor/changeStatusMeet`, { slotId: slotId }, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}

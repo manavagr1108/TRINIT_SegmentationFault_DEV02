@@ -199,7 +199,7 @@ export const fetchBookedTutorSlotsOfDate = async (req: RequestWithAuthenticatedS
         if (new Date(date).toString() == new Date("Invalid Date").toString()) {
             return res.status(403).json({ message: "Invalid date" })
         }
-        const tutorSlots = await SlotModel.find({ tutorId: tutorId, date: newDate });
+        const tutorSlots = await SlotModel.find({ tutorId: tutorId, date: newDate, isApproved: true });
 
         return res.status(200).json({ data: tutorSlots });
     } catch (err: any) {
@@ -236,7 +236,7 @@ export const bookSlots = async (req: RequestWithAuthenticatedStudent, res: Respo
         if (new Date(date).toString() == new Date("Invalid Date").toString()) {
             return res.status(403).json({ message: "Invalid date" })
         }
-
+        const tutor = await TutorModel.findOne({ _id: tutorId });
         const tutorSlots = await SlotModel.find({ tutorId: tutorId, date: newDate });
         let collision = false;
         tutorSlots.forEach((val) => {
@@ -247,7 +247,7 @@ export const bookSlots = async (req: RequestWithAuthenticatedStudent, res: Respo
         if (collision) {
             return res.status(403).json({ message: "Overlaps with existig slots" });
         }
-        const slot = await SlotModel.create({ tutorId: tutorId, studentId: student._id, language: language, endTime: endTime, startTime: startTime, date: newDate, code: Math.floor(Math.random() * 1000000) });
+        const slot = await SlotModel.create({ tutorId: tutorId, studentId: student._id, language: language, endTime: endTime, startTime: startTime, date: newDate, code: Math.floor(Math.random() * 1000000), isApproved: tutor?.isAutoApprovalOn || false });
         await slot.save();
         return res.status(200).json({ message: "Slot created successfully" });
     } catch (err: any) {
@@ -263,7 +263,6 @@ export const bookSlots = async (req: RequestWithAuthenticatedStudent, res: Respo
 
 export const fetchUpcomingSlots = async (req: RequestWithAuthenticatedStudent, res: Response) => {
     try {
-        console.log("called");
         const student = await StudentModel.findById(req.studentId);
         if (!student) {
             return res

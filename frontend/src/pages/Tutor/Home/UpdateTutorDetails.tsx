@@ -68,7 +68,6 @@ function UpdateStudentDetails(student: any) {
     if (response.status === 200) {
       showNotification("Success", response.data.message, "success");
       setIsProfileUpdated(true);
-      console.log("called");
       navigate("/tutor/home");
       return;
     } else if (response.status === 401) {

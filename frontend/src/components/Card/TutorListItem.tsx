@@ -22,7 +22,6 @@ function TutorListItem(data: any) {
     data.languages.map((language: any) => language.language)
   );
   const [languageIndex, setLanguageInde] = React.useState<number>(0);
-  const [time, setTime] = React.useState<string>(data.availableTimeZone[0]);
   const bookTutor = async () => {
     const response = await prepareOrder({
       tutorId: data._id,
@@ -106,15 +105,6 @@ function TutorListItem(data: any) {
               v !== null
                 ? setLanguageInde(languages.indexOf(v))
                 : setLanguageInde(0)
-            }
-          />
-          <Select
-            label="Available Time"
-            placeholder="Pick value"
-            data={data.availableTimeZone}
-            value={time}
-            onChange={(v) =>
-              v !== null ? setTime(v) : setTime(data.availableTimeZone[0])
             }
           />
         </Flex>

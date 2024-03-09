@@ -1,6 +1,5 @@
-import { Center, Flex, NumberFormatter, Text } from "@mantine/core";
+import { Flex, NumberFormatter, Text } from "@mantine/core";
 import { IconLanguage } from "@tabler/icons-react";
-import React from "react";
 
 function SearchButton(data: any) {
   return (
@@ -18,7 +17,6 @@ function SearchButton(data: any) {
           value={`${data.prices[0]}-${data.prices[2]}`}
           thousandSeparator
         />
-        <Text>{data.availableTimeZone}</Text>
       </Flex>
     </Flex>
   );

@@ -7,7 +7,6 @@ import { loggedInNavLinks, unprotectedNavLinks } from "../NavLinks/Navlinks";
 
 const Home = ({ children }: { children: React.ReactElement }) => {
   const { tutor, isProfileUpdated } = useAuthTutor();
-  console.log(tutor);
   const cloneChildWithProp = React.cloneElement(children, tutor);
   return (
     <Flex direction="column" className="h-full w-[100vw] justify-start">

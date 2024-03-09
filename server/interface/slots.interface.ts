@@ -8,4 +8,5 @@ export default interface SlotInterface extends Document {
     startTime: number;
     endTime: number;
     code: number;
+    isApproved: boolean;
 }

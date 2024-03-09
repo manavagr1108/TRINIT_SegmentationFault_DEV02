@@ -1,19 +1,17 @@
 import { Button, Center, Flex, Tabs, Text } from "@mantine/core";
 import {
   DateInput,
-  DatePicker,
-  DateTimePicker,
   TimeInput,
 } from "@mantine/dates";
 import { useEffect, useState } from "react";
-import { showNotification, timeZoneMap } from "../../../utils/helpers";
+import { showNotification } from "../../../utils/helpers";
 import {
   bookSlotsApi,
   fetchTutorSlots,
   getRegisteredTutors,
 } from "../../../utils/apiCalls";
 
-function BookClassWithTutor(data: any) {
+function BookClassWithTutor() {
   const [startTime, setStartTime] = useState<Date>();
   const [tutors, setTutors] = useState<any[]>([]);
   const [bookedSlots, setBookedSlots] = useState<any[]>([]);
@@ -44,8 +42,8 @@ function BookClassWithTutor(data: any) {
       );
       return;
     }
-    const start = startTimeSlot.split(":");
-    const end = endTimeSlot.split(":");
+    const start = startTime.split(":");
+    const end = endTime.split(":");
 
     if (start.length < 2 || endTimeSlot.length < 2) {
       showNotification(
@@ -159,7 +157,7 @@ function BookClassWithTutor(data: any) {
                           startTime
                         )
                       }
-                    ></Button>
+                    >Book slot</Button>
                   </>
                 )}
               </Flex>

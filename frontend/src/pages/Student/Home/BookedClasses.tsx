@@ -17,8 +17,7 @@ function BookedClasses(data: any) {
 
   const handleJoinRoom = useCallback(
     (data: any) => {
-      const { email, room } = data;
-      console.log(email, room);
+      const {  room } = data;
       navigate(`/student/room/${room}`);
     },
     [navigate]
@@ -26,7 +25,6 @@ function BookedClasses(data: any) {
   const handleUpcomingClasses = async () => {
     const repsonse = await getUpcomingClassesStudent();
     if (repsonse.status === 200) {
-      console.log(repsonse.data.data);
       setClassesList(repsonse.data.data);
     }
   };

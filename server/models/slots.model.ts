@@ -9,7 +9,8 @@ const TutorSchema = new Schema<SlotInterface>({
     // Have time in minutes. Any time of day will be represented as minutes
     startTime: { type: Number, default: 0 },
     endTime: { type: Number, default: 0 },
-    code: { type: Number, default: 0 }
+    code: { type: Number, default: 0 },
+    isApproved: { type: Boolean, default: false }
 });
 
 const TutorModel = model<SlotInterface>("SlotModel", TutorSchema);

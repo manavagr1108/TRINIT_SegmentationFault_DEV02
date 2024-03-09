@@ -1,44 +1,62 @@
 import { useCallback, useEffect, useState } from "react";
-import { Calendar, DateTimePicker, TimeInput } from "@mantine/dates";
-import { Button, Center, Flex, Text } from "@mantine/core";
-import { showNotification } from "../../../utils/helpers";
-import ListClass from "./ListClass";
+import { Button, Center, Flex, Switch, Text } from "@mantine/core";
 import { useSocket } from "../../../context/SocketContextProvider";
 import { useNavigate } from "react-router-dom";
-import { getUpcomingClassesTutor } from "../../../utils/apiCalls";
+import { getUpcomingClassesTutor, toggleApprovalOfMeet, toggleAutoApproval } from "../../../utils/apiCalls";
+import useAuthTutor from "../../../context/TutorAuthContext";
+import { showNotification } from "../../../utils/helpers";
 function SetAvailableTime(data: any) {
-  console.log(data);
-  //   const [startTime, setStartTime] = useState<string>("");
-  //   const [endTime, setEndTime] = useState<string>("");
   const [classesList, setClassesList] = useState<any[]>([]);
   const handleUpcomingClasses = async () => {
     const repsonse = await getUpcomingClassesTutor();
     if (repsonse.status === 200) {
-      console.log(repsonse.data.data);
       setClassesList(repsonse.data.data);
     }
   };
+  const { tutor } = useAuthTutor();
   useEffect(() => {
     handleUpcomingClasses();
   }, []);
   const navigate = useNavigate();
   const socket = useSocket();
   const handleJoinVC = useCallback((code: number) => {
-    console.log(code);
     socket?.emit("room:join", {
       email: data.email,
       room: code,
     });
   }, []);
-
+  const [checked, setChecked] = useState(tutor?.isAutoApprovalOn || false);
   const handleJoinRoom = useCallback(
     (data: any) => {
-      const { email, room } = data;
-      console.log(email, room);
+      const {  room } = data;
       navigate(`/tutor/room/${room}`);
     },
     [navigate]
   );
+
+
+  const toggleAutoApprovalSubmit = async () => {
+    const response = await toggleAutoApproval();
+    if (response.status === 200) {
+      showNotification("Success", response.data.message, "success");
+      setChecked(!checked);
+      return;
+    }
+  }
+
+  const toggleApprovalMeetSubmit = async (slotId: string) => {
+    const response = await toggleApprovalOfMeet(slotId);
+    if (response.status === 200) {
+      showNotification("Success", response.data.message, "success");
+      setClassesList(classesList.map((elem, i) => {
+        if (elem.slot._id == slotId) {
+          elem.slot.isApproved = !elem.slot.isApproved
+        }
+        return elem;
+      }))
+      return;
+    }
+  }
 
   useEffect(() => {
     if (socket !== null) {
@@ -50,19 +68,25 @@ function SetAvailableTime(data: any) {
   }, [socket, handleJoinRoom]);
   return (
     <Flex direction="column" justify={Center} gap={6}>
+      <Switch
+        checked={checked}
+        onChange={toggleAutoApprovalSubmit}
+        label="I agree to sell my privacy"
+      />
       {classesList.length === 0 ? null : (
         <Flex>
-          {classesList.map((slot: any) => (
-            <Flex className=" justify-center items-center">
+          {classesList.map((slot: any, key) => (
+            <Flex className=" justify-center items-center" key={key}>
               <Text className="pr-2">{slot.student.name}'s </Text>
               <Text>{slot.slot.language} start at {(slot.slot.startTime / 60).toString().padStart(2, '0') + ":" + (slot.slot.startTime % 60).toString().padStart(2, "0") + " - " + (slot.slot.endTime / 60).toString().padStart(2, '0') + ":" + (slot.slot.endTime % 60).toString().padStart(2, "0")} </Text>
-              <Text></Text>
-              <Button
+              {slot.slot.isApproved && <Button
                 className="ml-3"
                 onClick={() => handleJoinVC(slot.slot.code)}
               >
                 Join VC
-              </Button>
+              </Button>}
+              <Button onClick={() => toggleApprovalMeetSubmit(slot.slot._id)}>{slot.slot.isApproved ? "Cancel" : "Approve"}</Button>
+
             </Flex>
           ))}
         </Flex>

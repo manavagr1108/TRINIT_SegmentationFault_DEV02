@@ -2,6 +2,7 @@ import { RequestWithAuthenticatedTutor } from "../interface/auth.interface";
 import { Response } from "express";
 import { PaymentModel, SlotModel, StudentModel, TutorModel } from "../models";
 import logger from "../utils/logger";
+import { isValidObjectId } from "mongoose";
 
 export const getCurrentTutorDetails = async (
     req: RequestWithAuthenticatedTutor,
@@ -49,7 +50,7 @@ export const updateProfile = async (
                 .status(404)
                 .json({ message: "Student doesn't exist" });
         }
-        const { name, email, gender, age, languages, timezone } = req.body;
+        const { name, email, gender, age, languages } = req.body;
         if (email != student.email && name != student.name) {
             return res
                 .status(403)
@@ -62,7 +63,6 @@ export const updateProfile = async (
                 age: age,
                 languages: languages || [],
                 isProfileUpdated: true,
-                availableTimeZone: timezone,
             },
         });
         return res
@@ -174,3 +174,65 @@ export const fetchUpcomingSlots = async (
         return res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export const toggleAutoApproval = async (req: RequestWithAuthenticatedTutor, res: Response) => {
+    try {
+        const student = await TutorModel.findById(req.tutorId);
+        if (!student) {
+            return res
+                .cookie("idToken", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        await TutorModel.findOneAndUpdate({ _id: student._id }, { $set: { isAutoApprovalOn: !student.isAutoApprovalOn } });
+        return res.status(200).json({ message: "Auto approval turned " + (student.isAutoApprovalOn == false ? "on" : "off") });
+    } catch (err: any) {
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const changeAprovalStatusOfMeet = async (req: RequestWithAuthenticatedTutor, res: Response) => {
+    try {
+        const student = await TutorModel.findById(req.tutorId);
+        if (!student) {
+            return res
+                .cookie("idToken", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        const { slotId } = req.body;
+        if (!isValidObjectId(slotId)) {
+            return res.status(403).json({ message: "Slot id is invalid" });
+        }
+        const slotModel = await SlotModel.findOne({ _id: slotId, tutorId: req.tutorId });
+        if (!slotModel) {
+            return res.status(403).json({ message: "Slot not found" });
+        }
+        await SlotModel.findOneAndUpdate({ _id: slotModel._id }, { $set: { isApproved: !slotModel.isApproved } });
+        return res.status(200).json({ message: "Slot has been " + (slotModel.isApproved == false ? "approved" : "rejected") });
+    } catch (err: any) {
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}

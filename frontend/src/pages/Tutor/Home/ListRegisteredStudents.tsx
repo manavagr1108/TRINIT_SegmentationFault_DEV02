@@ -8,7 +8,6 @@ function ListRegisteredStudents() {
   const fetchRegisteredStudents = async () => {
     const response = await getRegisteredStudents();
     if (response.status === 200) {
-      console.log(response.data.data);
       setData(response.data.data);
     } else {
       showNotification("Error", "Unable to fetch users", "error");
