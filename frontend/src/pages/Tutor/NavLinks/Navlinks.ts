@@ -4,7 +4,7 @@ export const loggedInNavLinks = [
     link: "/tutor/getRegisteredStudents",
   },
   {
-    name: "Set Available Time",
+    name: "Join class",
     link: "/tutor/setAvailableTime",
   },
   {

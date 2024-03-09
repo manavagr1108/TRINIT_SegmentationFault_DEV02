@@ -196,3 +196,25 @@ export const bookSlotsApi = async (body: any) => {
     return e.response;
   }
 }
+
+export const getUpcomingClassesTutor = async () => {
+  try {
+    const response = await CustomAxios.get(`tutor/getUpcomingClasses`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
+
+export const getUpcomingClassesStudent = async () => {
+  try {
+    const response = await CustomAxios.get(`student/getUpcomingClasses`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}

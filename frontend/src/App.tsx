@@ -10,6 +10,7 @@ import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
 import { BrowserRouter } from "react-router-dom";
 import { RouteTypeContextProvider } from "./context/RouteTypeContext";
+import { SocketProvider } from "./context/SocketContextProvider";
 const App = () => {
   return (
     <ErrorBoundary
@@ -22,7 +23,9 @@ const App = () => {
         <Notifications />
         <BrowserRouter>
           <RouteTypeContextProvider>
-            <Router />
+            <SocketProvider>
+              <Router />
+            </SocketProvider>
           </RouteTypeContextProvider>
         </BrowserRouter>
       </MantineProvider>

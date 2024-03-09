@@ -3,8 +3,15 @@ import { TutorHome, TutorUpdateProfile } from "../pages";
 import ListClass from "../pages/Tutor/Home/ListClass";
 import SetAvailableTime from "../pages/Tutor/Home/SetAvailableTime";
 import ListRegisteredStudents from "../pages/Tutor/Home/ListRegisteredStudents";
+import RoomPage from "../pages/Tutor/Home/tutorRoom";
 
 export const tutorRoutes: RouteType[] = [
+  {
+    path: "/tutor/room/:room_id",
+    element: <TutorHome children={<RoomPage />}></TutorHome>,
+    title: "Home",
+    description: "Home page for tutor",
+  },
   {
     path: "/tutor/getRegisteredStudents",
     element: <TutorHome children={<ListRegisteredStudents />}></TutorHome>,
