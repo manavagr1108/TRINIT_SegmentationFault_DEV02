@@ -42,3 +42,9 @@ export const languages = [
 ];
 export const expArray = ["low", "medium", "high"];
 
+export const timeZoneMap: any = {
+  Morning: 540,
+  Afternoon: 900,
+  Evening: 1140,
+  Night: 1320,
+};

@@ -11,7 +11,6 @@ function SetAvailableTime(data: any) {
       <Text>Set todays Available time</Text>
       <Flex>
         <DateTimePicker
-          //   value={new Date(startTime)}
           onChange={(e) => (e !== null ? setStartTime(e.toString()) : null)}
           label="start time"
           placeholder="Input placeholder"
@@ -26,7 +25,6 @@ function SetAvailableTime(data: any) {
                   "error"
                 )
           }
-          //   value={new Date(endTime)}
           label="end time"
           placeholder="Input placeholder"
         />

@@ -7,6 +7,10 @@ export const loggedInNavLinks = [
     name: "SearchTutor",
     link: "/student/searchTutor",
   },
+  {
+    name: "BookClass",
+    link: "/student/bookclass",
+  },
 ];
 export const unprotectedNavLinks = [
   {

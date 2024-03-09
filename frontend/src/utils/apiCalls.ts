@@ -164,3 +164,24 @@ export const getRegisteredStudents = async () => {
     return e.response;
   }
 }
+export const getRegisteredTutors = async () => {
+  try {
+    const response = await CustomAxios.get(`student/fetchTutors`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
+
+export const fetchTutorSlots = async (body: any) => {
+  try {
+    const response = await CustomAxios.post(`student/fetchTutorSlots`, body, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
