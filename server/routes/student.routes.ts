@@ -3,6 +3,7 @@ import {
     bookSlots,
     fetchAllTutors,
     fetchBookedTutorSlotsOfDate,
+    fetchFlashCards,
     fetchUpcomingSlots,
     getCurrentStudentDetails,
     searchTutor,
@@ -17,4 +18,6 @@ studentRouter.get("/fetchTutors", fetchAllTutors);
 studentRouter.post("/fetchTutorSlots", fetchBookedTutorSlotsOfDate);
 studentRouter.post("/bookSlot", bookSlots);
 studentRouter.get("/getUpcomingClasses", fetchUpcomingSlots);
+studentRouter.post("/getFlashCards", fetchFlashCards);
+
 export default studentRouter;

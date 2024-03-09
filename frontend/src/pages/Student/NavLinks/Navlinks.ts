@@ -15,6 +15,10 @@ export const loggedInNavLinks = [
     name: "Booked Class",
     link: "/student/bookedClasses",
   },
+  {
+    name: "Flashcards",
+    link: "/student/flashcards",
+  },
 ];
 export const unprotectedNavLinks = [
   {

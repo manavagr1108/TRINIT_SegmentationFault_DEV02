@@ -11,6 +11,7 @@ import { Notifications } from "@mantine/notifications";
 import { BrowserRouter } from "react-router-dom";
 import { RouteTypeContextProvider } from "./context/RouteTypeContext";
 import { SocketProvider } from "./context/SocketContextProvider";
+import '@mantine/carousel/styles.css';
 const App = () => {
   return (
     <ErrorBoundary

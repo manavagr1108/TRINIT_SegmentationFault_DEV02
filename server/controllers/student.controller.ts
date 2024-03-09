@@ -1,6 +1,6 @@
 import { RequestWithAuthenticatedStudent } from "../interface/auth.interface";
 import { Response } from "express";
-import { PaymentModel, SlotModel, StudentModel, TutorModel } from "../models";
+import { FlashcardModel, PaymentModel, SlotModel, StudentModel, TutorModel } from "../models";
 import logger from "../utils/logger";
 import { isValidObjectId } from "mongoose";
 
@@ -291,6 +291,35 @@ export const fetchUpcomingSlots = async (req: RequestWithAuthenticatedStudent, r
         )
         const finalTutors = tutors.filter((elem) => elem != undefined && elem.tutor != undefined);
         return res.status(200).json({ data: finalTutors });
+    } catch (err: any) {
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const fetchFlashCards = async (req: RequestWithAuthenticatedStudent, res: Response) => {
+    try {
+        const student = await StudentModel.findById(req.studentId);
+        if (!student) {
+            return res
+                .cookie("token", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        const { typingLanguage, visibleLanguage } = req.body;
+        const languageTypingFlashCard = await FlashcardModel.find({ language: typingLanguage }).sort({ key: 1 });
+        const languageVisibleFlasCard = await FlashcardModel.find({ language: visibleLanguage }).sort({ key: 1 });
+        return res.status(200).json({ langTyping: languageTypingFlashCard, langVisible: languageVisibleFlasCard })
     } catch (err: any) {
         logger.warn(
             JSON.stringify({

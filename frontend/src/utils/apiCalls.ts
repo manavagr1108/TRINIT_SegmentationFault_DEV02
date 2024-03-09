@@ -240,3 +240,14 @@ export const toggleApprovalOfMeet = async (slotId: string) => {
     return e.response;
   }
 }
+
+export const getFlashCards = async (body:any) => {
+  try {
+    const response = await CustomAxios.post(`student/getFlashCards`, body, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}

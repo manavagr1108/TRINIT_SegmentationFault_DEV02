@@ -5,11 +5,17 @@ import SearchTutor from "../pages/Student/Home/SearchTutor";
 import BookClassWithTutor from "../pages/Student/Home/BookClassWithTutor";
 import RoomPage from "../pages/Student/Home/StudentRoom";
 import BookedClasses from "../pages/Student/Home/BookedClasses";
-
+import Flashcards from "../pages/Student/Home/Flashcards";
 export const studentRoutes: RouteType[] = [
   {
     path: "/student/room/:room_id",
     element: <StudentHome children={<RoomPage />}></StudentHome>,
+    title: "Home",
+    description: "Home page for student",
+  },
+  {
+    path: "/student/flashcards",
+    element: <StudentHome children={<Flashcards />}></StudentHome>,
     title: "Home",
     description: "Home page for student",
   },
