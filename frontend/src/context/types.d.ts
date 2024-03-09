@@ -1,6 +1,7 @@
 interface Student {
   _id: string;
   name: string;
+  gender: string;
 }
 
 

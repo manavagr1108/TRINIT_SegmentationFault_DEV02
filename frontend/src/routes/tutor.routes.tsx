@@ -1,16 +1,16 @@
 import { Navigate } from "react-router-dom";
 import { TutorHome, TutorUpdateProfile } from "../pages";
-import ListClass from "../pages/Tutor/Home/ListClass";
 import SetAvailableTime from "../pages/Tutor/Home/SetAvailableTime";
 import ListRegisteredStudents from "../pages/Tutor/Home/ListRegisteredStudents";
+import RoomPage from "../pages/Tutor/Home/TutorRoom";
 
 export const tutorRoutes: RouteType[] = [
-  // {
-  //   path: "/tutor/room/:room_id",
-  //   element: <TutorHome children={<RoomPage />}></TutorHome>,
-  //   title: "Home",
-  //   description: "Home page for tutor",
-  // },
+  {
+    path: "/tutor/room/:room_id",
+    element: <RoomPage />,
+    title: "Home",
+    description: "Home page for tutor",
+  },
   {
     path: "/tutor/getRegisteredStudents",
     element: <TutorHome children={<ListRegisteredStudents />}></TutorHome>,

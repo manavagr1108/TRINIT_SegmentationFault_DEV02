@@ -8,10 +8,12 @@ import {
   MultiSelect,
   Flex,
   NumberInput,
+  Image,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
   currState,
+  expArray,
   genders,
   languages,
   showNotification,
@@ -23,7 +25,6 @@ import { useState } from "react";
 import useAuthTutor from "../../../context/TutorAuthContext";
 
 function UpdateStudentDetails(student: any) {
-  const expArray = ["low", "medium", "high"];
   const navigate = useNavigate();
   const { setIsProfileUpdated } = useAuthTutor();
   const { setType } = useRouteTypeContext();
@@ -122,83 +123,129 @@ function UpdateStudentDetails(student: any) {
   };
 
   return (
-    <Box
-      maw={340}
+    <Flex
       mx="auto"
-      className="px-[4rem] py-4 border-2 border-[#228be6] rounded-lg"
+      className="flex-row  justify-between max-w-[80%] h-[70%] bg-white rounded shadow-lg p-4 md:p-8 mb-6"
     >
-      <Text ta="center" fw={500} size="lg">
-        Update Your Details
-      </Text>
-
-      <TextInput
-        withAsterisk
-        label="Name"
-        placeholder="enter your name"
-        {...updateProfileForm.getInputProps("name")}
-      />
-      <TextInput
-        withAsterisk
-        label="Email"
-        placeholder="your@email.com"
-        {...updateProfileForm.getInputProps("email")}
-      />
-      <TextInput
-        withAsterisk
-        label="Age"
-        placeholder="enter your age"
-        {...updateProfileForm.getInputProps("age")}
-      />
-      <Select
-        label="Gender"
-        withAsterisk
-        placeholder="Select gender"
-        data={genders}
-        {...updateProfileForm.getInputProps("gender")}
-      />
-      <MultiSelect
-        label="Languages"
-        withAsterisk
-        placeholder="Select known languages"
-        data={languages}
-        {...updateProfileForm.getInputProps("languages")}
-        value={language}
-        onChange={(event) => addLang(event)}
-      />
-      {data.map((elem, key) => {
-        return (
-          <Flex key={key} className="flex-col">
-            <TextInput label="Language" readOnly value={elem.language} />
-            <Select
-              label="Experience"
-              withAsterisk
-              placeholder="Experience"
-              data={expArray}
-              value={expArray[elem.experience]}
-              onChange={(v) => {
-                if (v != null) {
-                  setExp(expArray.indexOf(v), key);
-                }
-              }}
-              maw={100}
-            />
-            <NumberInput
-              value={elem.price}
-              label="Price"
-              withAsterisk
-              onChange={(event) => setPrice(event, key)}
-              min={5000}
-              max={20000}
-            />
-          </Flex>
-        );
-      })}
-      <Group justify="center" mt="md">
-        <Button onClick={updateProfile} type="submit">
-          Submit
-        </Button>
-      </Group>
-    </Box>
+      <Flex className="flex-col w-[45%] mt-4">
+        <Text ta="left" fw={700} className="w-full" size="lg">
+          Personal Details
+        </Text>
+        <Text ta="left" fw={200} className="w-full text-indigo-400" size="sm">
+          Please fill your personal Details
+        </Text>
+        <Image
+          radius="md"
+          className="h-[40rem]"
+          src="https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?size=338&ext=jpg&ga=GA1.1.1827530304.1709942400&semt=ais"
+        />
+      </Flex>
+      <Flex className="flex-col gap-2 overflow-auto h-[100%] w-[50%] self-start">
+        <TextInput
+          label="Name"
+          placeholder="enter your name"
+          variant="filled"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
+          {...updateProfileForm.getInputProps("name")}
+        />
+        <TextInput
+          label="Email"
+          placeholder="your@email.com"
+          variant="filled"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
+          {...updateProfileForm.getInputProps("email")}
+        />
+        <Flex className="w-full justify-between gap-2">
+          <TextInput
+            label="Age"
+            placeholder="enter your age"
+            variant="filled"
+            classNames={{
+              label: "text-indigo-500 text-xs",
+            }}
+            {...updateProfileForm.getInputProps("age")}
+          />
+          <Select
+            label="Gender"
+            placeholder="Select gender"
+            variant="filled"
+            classNames={{
+              label: "text-indigo-500 text-xs",
+            }}
+            data={genders}
+            {...updateProfileForm.getInputProps("gender")}
+          />
+        </Flex>
+        <MultiSelect
+          label="Languages"
+          placeholder="Select known languages"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
+          data={languages}
+          {...updateProfileForm.getInputProps("languages")}
+          value={language}
+          onChange={(event) => addLang(event)}
+        />
+        {data.map((elem, key) => {
+          return (
+            <Flex key={key} className="w-full justify-evenly gap-5">
+              <TextInput
+                variant="filled"
+                label="Language"
+                classNames={{
+                  label: "text-indigo-500 text-xs",
+                }}
+                readOnly
+                value={elem.language}
+              />
+              <Select
+                label="Experience"
+                placeholder="Experience"
+                data={expArray}
+                value={expArray[elem.experience]}
+                variant="filled"
+                classNames={{
+                  label: "text-indigo-500 text-xs",
+                }}
+                onChange={(v) => {
+                  if (v != null) {
+                    setExp(expArray.indexOf(v), key);
+                  }
+                }}
+                maw={100}
+              />
+              <NumberInput
+                value={elem.price}
+                label="Price"
+                variant="filled"
+                classNames={{
+                  label: "text-indigo-500 text-xs",
+                }}
+                onChange={(event) => setPrice(event, key)}
+                min={5000}
+                max={20000}
+              />
+            </Flex>
+          );
+        })}
+        <Group justify="center" mt="md" className="pb-5">
+          <Button
+            onClick={updateProfile}
+            variant="subtle"
+            color="indigo"
+            className="hover:border-2 border-indigo-500"
+            type="submit"
+          >
+            Submit
+          </Button>
+        </Group>
+      </Flex>
+    </Flex>
   );
 }
 

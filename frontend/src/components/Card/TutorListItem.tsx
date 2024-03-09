@@ -38,7 +38,7 @@ function TutorListItem(data: any) {
         theme: {
           color: "#121212",
         },
-        prefill:{contact:"9999999999"},
+        prefill: { contact: "9999999999" },
         handler: async (response: any) => {
           const res = await paymentCallback({
             razorpay_payment_id: response.razorpay_payment_id,
@@ -63,29 +63,34 @@ function TutorListItem(data: any) {
     }
   };
   return (
-    <Flex
-      justify="space-between"
-      className=" w-max border-2 border-blue-400 rounded-lg p-6 px-4 py-1"
-    >
+    <Flex className="py-3 justify-around flex-col border-2 border-indigo-400 w-[40%] rounded-lg px-4">
       <Flex direction="column">
         <Flex justify="space-between" gap={2}>
-          <Flex>
-            {data.name}
-            {" - "}
-            {
-              <NumberFormatter
-                prefix=" ₹"
-                value={data.languages[languageIndex].price}
-                thousandSeparator
-              />
-            }
-            {" - "}
-            {expArray[languageIndex]}
+          <Flex className="w-[60%] justify-between">
+            <Flex className="flex-col justify-center">
+              <Text p={0} m={0} fw={700} size="lg">
+                {data.name}
+              </Text>
+              <Text className="text-indigo-600" fw={200} size="xs" p={0} m={0}>
+                Expertise - {expArray[languageIndex]}
+              </Text>
+            </Flex>
+            <NumberFormatter
+              prefix=" ₹"
+              className=" text-lg"
+              value={data.languages[languageIndex].price}
+              thousandSeparator
+            />
           </Flex>
-          <Flex>
+          <Flex className="w-[30%] justify-end">
             <HoverCard width={100} shadow="md">
               <HoverCard.Target>
-                <Button onClick={bookTutor}>
+                <Button
+                  variant="filled"
+                  color="indigo"
+                  className="hover:border-2 border-indigo-500"
+                  onClick={bookTutor}
+                >
                   <IconBookUpload />
                 </Button>
               </HoverCard.Target>
@@ -95,10 +100,16 @@ function TutorListItem(data: any) {
             </HoverCard>
           </Flex>
         </Flex>
-        <Flex gap={3} justify={Center} align={Center}>
+        <Flex gap={12} className=" justify-center items-center">
           <Select
             label="Available Languages"
             placeholder="Pick value"
+            variant="filled"
+            classNames={{
+              label: "text-indigo-500 text-xs",
+            }}
+            className="w-[70%]"
+            size="xs"
             data={languages}
             value={languages[languageIndex]}
             onChange={(v) =>
@@ -107,6 +118,19 @@ function TutorListItem(data: any) {
                 : setLanguageInde(0)
             }
           />
+          {/* <Select
+            label="Available Time"
+            placeholder="Pick value"
+            variant="filled"
+            classNames={{
+              label: "text-indigo-500 text-xs",
+            }}
+            data={data.availableTimeZone}
+            value={time}
+            onChange={(v) =>
+              v !== null ? setTime(v) : setTime(data.availableTimeZone[0])
+            }
+          /> */}
         </Flex>
       </Flex>
     </Flex>

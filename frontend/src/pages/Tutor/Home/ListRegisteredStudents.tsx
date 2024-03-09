@@ -20,24 +20,31 @@ function ListRegisteredStudents() {
   return data.length === 0 ? (
     <Flex> No registered students </Flex>
   ) : (
-    <Flex direction="column" justify="center" align="center">
-      <Text>List of Registered Users</Text>
-      <Table>
+    <Flex
+      direction="column"
+      className="w-full self-start mt-4"
+      justify="center"
+      align="center"
+    >
+      <Text fw={700} size="lg" py={8}>
+        List of Registered Users
+      </Text>
+      <Table striped highlightOnHover withTableBorder className="w-[70%]">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Student Name</Table.Th>
-            <Table.Th>Subject</Table.Th>
-            <Table.Th>Age</Table.Th>
-            <Table.Th>Gender</Table.Th>
+            <Table.Th className="text-center">Student Name</Table.Th>
+            <Table.Th className="text-center">Subject</Table.Th>
+            <Table.Th className="text-center">Age</Table.Th>
+            <Table.Th className="text-center">Gender</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
           {data.map((d, i) => (
             <Table.Tr key={i}>
-              <Table.Td>{d.user.name}</Table.Td>
-              <Table.Td>{d.language}</Table.Td>
-              <Table.Td>{d.user.age}</Table.Td>
-              <Table.Td>{d.user.gender}</Table.Td>
+              <Table.Td className="text-center">{d.user.name}</Table.Td>
+              <Table.Td className="text-center">{d.language}</Table.Td>
+              <Table.Td className="text-center">{d.user.age}</Table.Td>
+              <Table.Td className="text-center">{d.user.gender}</Table.Td>
             </Table.Tr>
           ))}
         </Table.Tbody>

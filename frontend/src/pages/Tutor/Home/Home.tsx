@@ -9,14 +9,14 @@ const Home = ({ children }: { children: React.ReactElement }) => {
   const { tutor, isProfileUpdated } = useAuthTutor();
   const cloneChildWithProp = React.cloneElement(children, tutor);
   return (
-    <Flex direction="column" className="h-full w-[100vw] justify-start">
+    <Flex className="h-[100vh] w-[100vw] justify-start">
       <Flex className="h-full justify-start">
         <Navbar
           loggedInNavLinks={loggedInNavLinks}
           unprotectedNavLinks={unprotectedNavLinks}
         />
       </Flex>
-      <Flex className="w-full pl-[15rem] py-2 px-10 justify-center items-start">
+      <Flex className="w-full h-full pl-[15rem] py-2 px-10 justify-center items-center">
         {isProfileUpdated === true ? (
           cloneChildWithProp
         ) : (

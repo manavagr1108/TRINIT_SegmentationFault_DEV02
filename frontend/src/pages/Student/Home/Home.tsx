@@ -1,10 +1,5 @@
-import { Button, Container, Drawer, Flex, Text } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import useAuthStudent from "../../../context/StudentAuthContext";
-import { IconUserCircle } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
-import { currState, genders, showNotification } from "../../../utils/helpers";
-import { studentLogout } from "../../../utils/apiCalls";
-import useRouteTypeContext from "../../../context/RouteTypeContext";
 import UpdateStudentDetails from "./UpdateStudentDetails";
 import Navbar from "../../../components/Navbar/Navbar";
 import { loggedInNavLinks, unprotectedNavLinks } from "../NavLinks/Navlinks";
@@ -16,14 +11,14 @@ const Home = ({ children }: { children: React.ReactElement }) => {
 
   const cloneChildWithProp = React.cloneElement(children, student);
   return (
-    <Flex direction="column" className="h-full w-[100vw] justify-start">
+    <Flex className="h-[100vh] w-[100vw] justify-start">
       <Flex className="h-full justify-start">
         <Navbar
           loggedInNavLinks={loggedInNavLinks}
           unprotectedNavLinks={unprotectedNavLinks}
         />
       </Flex>
-      <Flex className="w-full pl-[15rem] py-2 px-10 justify-center items-start">
+      <Flex className="w-full h-full pl-[15rem] py-2 px-10 justify-center items-center">
         {isProfileUpdated === true ? (
           cloneChildWithProp
         ) : (

@@ -87,12 +87,14 @@ function BookClassWithTutor() {
     }
   };
   return (
-    <Flex justify={Center} direction="column">
-      <Text className=" text-center">BookClassWithTutor</Text>
+    <Flex className=" justify-start self-start pt-4" direction="column">
+      <Text className=" text-center" fw={700}>
+        BookClassWithTutor
+      </Text>
       {tutors.length === 0 ? (
         "No tutors registered!!"
       ) : (
-        <Tabs className="w-[50vw]">
+        <Tabs color="indigo" className="w-[50vw]">
           {tutors.map((tutor, i) => (
             <Tabs.List>
               <Tabs.Tab value={i.toString()}>{tutor.user.name}</Tabs.Tab>
@@ -101,22 +103,30 @@ function BookClassWithTutor() {
           {tutors.map((tutor, i) => (
             <Tabs.Panel value={i.toString()}>
               <Flex direction="column" className=" gap-4 items-center">
-                <Text className="text-center">{tutor.language} Class</Text>
+                <Text className="text-center pt-4" fw={600}>
+                  {tutor.language} Class
+                </Text>
                 <DateInput
                   onChange={(e: any) => (e !== null ? setStartTime(e) : null)}
                   label="select date"
                   placeholder="Select date"
+                  variant="filled"
+                  classNames={{
+                    label: "text-indigo-500 text-xs",
+                  }}
                   minDate={new Date()}
                 />
                 <Button
+                  variant="subtle"
+                  color="indigo"
+                  className="hover:border-2 w-[6rem] p-0 m-0 border-indigo-500"
                   onClick={() => handleGetSlots(tutor.user._id)}
-                  className="w-[6rem] p-0 m-0"
                 >
                   Get Slots
                 </Button>
 
                 {bookedSlots.length === 0 ? null : (
-                  <Flex className=" flex-col justify-center items-center">
+                  <Flex className=" justify-center items-center">
                     List of booked slots:
                     {bookedSlots.map((slot) => (
                       <Flex className="w-[50vw] justify-evenly items-center">
@@ -132,22 +142,39 @@ function BookClassWithTutor() {
                   </Flex>
                 )}
                 {isSlotsFetched && (
-                  <>
-                    <TimeInput
-                      label="Start time"
-                      value={startTimeSlot}
-                      minTime="09:00"
-                      maxTime="22:00"
-                      onChange={(event) => setStartTimeSlot(event.target.value)}
-                    />
-                    <TimeInput
-                      label="End time"
-                      value={endTimeSlot}
-                      minTime={startTimeSlot}
-                      maxTime="22:00"
-                      onChange={(event) => setEndTimeSlot(event.target.value)}
-                    />
+                  <Flex className="flex-col gap-5">
+                    <Flex className=" gap-5">
+                      <TimeInput
+                        label="Start time"
+                        value={startTimeSlot}
+                        minTime="09:00"
+                        maxTime="22:00"
+                        w={100}
+                        variant="filled"
+                        classNames={{
+                          label: "text-indigo-500 text-xs",
+                        }}
+                        onChange={(event) =>
+                          setStartTimeSlot(event.target.value)
+                        }
+                      />
+                      <TimeInput
+                        label="End time"
+                        value={endTimeSlot}
+                        variant="filled"
+                        classNames={{
+                          label: "text-indigo-500 text-xs",
+                        }}
+                        minTime={startTimeSlot}
+                        maxTime="22:00"
+                        w={100}
+                        onChange={(event) => setEndTimeSlot(event.target.value)}
+                      />
+                    </Flex>
                     <Button
+                      variant="subtle"
+                      color="indigo"
+                      className="hover:border-2 border-indigo-500"
                       onClick={() =>
                         bookSlot(
                           tutor.user._id,
@@ -157,8 +184,11 @@ function BookClassWithTutor() {
                           startTime
                         )
                       }
-                    >Book slot</Button>
-                  </>
+                    >
+                      {" "}
+                      Book Slot
+                    </Button>
+                  </Flex>
                 )}
               </Flex>
             </Tabs.Panel>

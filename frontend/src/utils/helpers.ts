@@ -33,14 +33,14 @@ export const languages = [
   "German",
   "Arabic",
   "Chinese",
-  "Portuguese",
+  "Japanese",
   "Russian",
   "French",
   "English",
   "Hindi",
   "Korean",
 ];
-export const expArray = ["low", "medium", "high"];
+export const expArray = ["Low", "Medium", "High"];
 
 export const timeZoneMap: any = {
   Morning: 540,

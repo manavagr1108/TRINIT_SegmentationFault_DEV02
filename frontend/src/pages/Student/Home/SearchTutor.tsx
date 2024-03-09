@@ -53,14 +53,17 @@ function SearchTutor() {
   };
 
   return (
-    <Flex
-      direction="column"
-      className="w-full items-center justify-evenly gap-2"
-    >
-      <Stack className="border-2 overflow-auto border-blue-400 rounded-lg p-6">
+    <Flex className="w-full flex-col items-center justify-start h-full pt-4 gap-2">
+      <Text ta="center" fw={700}>
+        Filter Tutor
+      </Text>
+      <Flex className="border-2 flex-wrap mb-3 min-h-[15%] w-[80%] overflow-auto justify-evenly items-center  shadow-lg border-indigo-400 rounded-lg">
         <MultiSelect
           label="Languages"
-          withAsterisk
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
+          maw={300}
           placeholder="Select known languages"
           data={LANGUAGES}
           onChange={(v) => setLanguages(v)}
@@ -68,7 +71,10 @@ function SearchTutor() {
         />
         <Select
           label="Experience"
-          withAsterisk
+          variant="filled"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
           placeholder="required experience"
           data={expArray}
           value={expArray[experience]}
@@ -77,23 +83,34 @@ function SearchTutor() {
           }
           maw={100}
         />
-        <Text mt="md">Set Min Max Prices: </Text>
-        <RangeSlider
-          value={priceRange}
-          onChange={setPriceRange}
-          minRange={100}
-          min={100}
-          max={10000}
-          step={50}
-        />
-        <Button onClick={handleSearch}>Search Tutor</Button>
-      </Stack>
-      <Flex
-        direction="column"
-        gap={2}
-        className="w-full items-center justify-evenly overflow-auto"
+        <Flex className="flex-col justify-start pt-3 w-[40%]">
+          <Text className="text-indigo-500 text-xs m-0" mt="md">
+            Set Min Max Prices:{" "}
+          </Text>
+          <RangeSlider
+            className=" justify-self-center"
+            value={priceRange}
+            onChange={setPriceRange}
+            minRange={100}
+            min={100}
+            max={10000}
+            step={50}
+            color="indigo"
+          />
+        </Flex>
+      </Flex>
+      <Button
+        variant="subtle"
+        color="indigo"
+        className="hover:border-2 w-[8rem] min-h-[2rem] border-indigo-500"
+        onClick={handleSearch}
       >
-        List of available tutors:
+        Search Tutor
+      </Button>
+      <Flex
+        gap={2}
+        className="w-[80%] flex-wrap gap-4 items-center justify-evenly overflow-auto"
+      >
         {loading === true ? (
           <Loader />
         ) : (

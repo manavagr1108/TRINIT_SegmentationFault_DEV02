@@ -6,6 +6,8 @@ import {
   Text,
   Select,
   MultiSelect,
+  Flex,
+  Image,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
@@ -78,51 +80,86 @@ function UpdateStudentDetails(student: any) {
     }
   };
   return (
-    <Box
+    <Flex
       maw={340}
       mx="auto"
-      className="px-[4rem] py-4 border-2 border-[#228be6] rounded-lg"
+      className=" flex-row justify-between max-w-[80%] h-[60%] py-4 bg-white rounded shadow-lg p-4 md:p-8 mb-6"
     >
-      <Text ta="center" fw={500} size="lg">
-        Update Your Details
-      </Text>
+      <Flex className="flex-col w-[45%] mt-4">
+        <Text ta="left" fw={700} className="w-full" size="lg">
+          Personal Details
+        </Text>
+        <Text ta="left" fw={200} className="w-full text-indigo-400" size="sm">
+          Please fill your personal Details
+        </Text>
+        <Image
+          radius="md"
+          className="h-full"
+          src="https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?size=338&ext=jpg&ga=GA1.1.1827530304.1709942400&semt=ais"
+        />
+      </Flex>
+      <Flex className="flex-col w-[50%] self-center">
         <TextInput
-          withAsterisk
           label="Name"
+          variant="filled"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
           placeholder="enter your name"
           {...updateProfileForm.getInputProps("name")}
         />
         <TextInput
-          withAsterisk
           label="Email"
+          variant="filled"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
           placeholder="your@email.com"
           {...updateProfileForm.getInputProps("email")}
         />
         <TextInput
-          withAsterisk
           label="Age"
+          variant="filled"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
           placeholder="enter your age"
           {...updateProfileForm.getInputProps("age")}
         />
         <Select
           label="Gender"
-          withAsterisk
+          variant="filled"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
           placeholder="Select gender"
           data={genders}
           {...updateProfileForm.getInputProps("gender")}
         />
         <MultiSelect
           label="Languages"
-          withAsterisk
-          placeholder="Select known languages"
+          placeholder="Select at max 3"
+          classNames={{
+            label: "text-indigo-500 text-xs",
+          }}
           data={languages}
+          maxValues={3}
           {...updateProfileForm.getInputProps("languages")}
         />
 
         <Group justify="center" mt="md">
-          <Button onClick={updateProfile} type="submit">Submit</Button>
+          <Button
+            onClick={updateProfile}
+            variant="subtle"
+            color="indigo"
+            className="hover:border-2 border-indigo-500"
+            type="submit"
+          >
+            Submit
+          </Button>
         </Group>
-    </Box>
+      </Flex>
+    </Flex>
   );
 }
 

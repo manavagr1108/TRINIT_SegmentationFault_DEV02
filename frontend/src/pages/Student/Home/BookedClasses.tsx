@@ -1,11 +1,11 @@
-import { Button, Center, Flex, Text } from "@mantine/core";
+import { Button, Center, Flex, Table, Text } from "@mantine/core";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useSocket } from "../../../context/SocketContextProvider";
 import { getUpcomingClassesStudent } from "../../../utils/apiCalls";
 
 function BookedClasses(data: any) {
-    const [classesList, setClassesList] = useState<any[]>([]);
+  const [classesList, setClassesList] = useState<any[]>([]);
   const navigate = useNavigate();
   const socket = useSocket();
   const handleJoinVC = useCallback((code: number) => {
@@ -17,7 +17,7 @@ function BookedClasses(data: any) {
 
   const handleJoinRoom = useCallback(
     (data: any) => {
-      const {  room } = data;
+      const { room } = data;
       navigate(`/student/room/${room}`);
     },
     [navigate]
@@ -31,7 +31,7 @@ function BookedClasses(data: any) {
 
   useEffect(() => {
     handleUpcomingClasses();
-  },[])
+  }, []);
 
   useEffect(() => {
     if (socket !== null) {
@@ -41,25 +41,56 @@ function BookedClasses(data: any) {
       };
     }
   }, [socket, handleJoinRoom]);
-  return (
-    <Flex direction="column" justify={Center} gap={6}>
-      {classesList.length === 0 ? null : (
-        <Flex>
-          {classesList.map((slot: any) => (
-            <Flex className=" justify-center items-center">
-              <Text className="pr-2">Your </Text>
-              <Text>{slot.slot.language} start at {(slot.slot.startTime / 60).toString().padStart(2, '0') + ":" + (slot.slot.startTime % 60).toString().padStart(2, "0") + " - " + (slot.slot.endTime / 60).toString().padStart(2, '0') + ":" + (slot.slot.endTime % 60).toString().padStart(2, "0")} </Text>
-              <Text></Text>
-              <Button
-                className="ml-3"
-                onClick={() => handleJoinVC(slot.slot.code)}
-              >
-                Join VC
-              </Button>
-            </Flex>
+  return classesList.length === 0 ? (
+    <Text>You have no class to attend!</Text>
+  ) : (
+    <Flex className="flex-col self-start pt-8 items-center w-full">
+      <Text size="xl" fw={700} py="4px">
+        Classes
+      </Text>
+      <Table striped highlightOnHover withTableBorder className="w-[70%]">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th className="text-center">Language</Table.Th>
+            <Table.Th className="text-center">Tutor's Name</Table.Th>
+            <Table.Th className="text-center">StartTime</Table.Th>
+            <Table.Th className="text-center">EndTime</Table.Th>
+            <Table.Th className="text-center">Status</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {classesList.map((slot, i) => (
+            <Table.Tr className="h-[4rem]" key={i}>
+              <Table.Td className=" text-center">{slot.slot.language}</Table.Td>
+              <Table.Td className=" text-center">{slot.tutor.name}</Table.Td>
+              <Table.Td className=" text-center">
+                {(slot.slot.startTime / 60).toString().padStart(2, "0") +
+                  ":" +
+                  (slot.slot.startTime % 60).toString().padStart(2, "0")}
+              </Table.Td>
+              <Table.Td className=" text-center">
+                {(slot.slot.endTime / 60).toString().padStart(2, "0") +
+                  ":" +
+                  (slot.slot.endTime % 60).toString().padStart(2, "0")}
+              </Table.Td>
+              <Table.Td className=" text-center">
+                {slot.slot.isApproved ? (
+                  <Button
+                    variant="subtle"
+                    color="indigo"
+                    className="hover:border-2 border-indigo-500"
+                    onClick={() => handleJoinVC(slot.slot.code)}
+                  >
+                    Join VC
+                  </Button>
+                ) : (
+                  "Yet to be approved"
+                )}
+              </Table.Td>
+            </Table.Tr>
           ))}
-        </Flex>
-      )}
+        </Table.Tbody>
+      </Table>
     </Flex>
   );
 }
