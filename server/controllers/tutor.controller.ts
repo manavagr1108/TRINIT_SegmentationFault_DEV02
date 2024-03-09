@@ -125,9 +125,12 @@ export const getRegisteredUsers = async (
     }
 };
 
-export const fetchUpcomingSlots = async (req: RequestWithAuthenticatedTutor, res: Response) => {
+export const fetchUpcomingSlots = async (
+    req: RequestWithAuthenticatedTutor,
+    res: Response
+) => {
     try {
-        const student = await StudentModel.findById(req.tutorId);
+        const student = await TutorModel.findById(req.tutorId);
         if (!student) {
             return res
                 .cookie("idToken", "", {
@@ -140,20 +143,26 @@ export const fetchUpcomingSlots = async (req: RequestWithAuthenticatedTutor, res
                 .json({ message: "Student doesn't exist" });
         }
         const tutorSlots = await SlotModel.find({ tutorId: req.tutorId });
-        const date = new Date(new Date().toDateString())
+        const date = new Date(new Date().toDateString());
         const data = tutorSlots.map((val) => {
             if (new Date(val.date).getTime() >= date.getTime()) {
                 return val;
             }
-        })
-        const finalData = data.filter((elem) => elem != null && elem != undefined);
+        });
+        const finalData = data.filter(
+            (elem) => elem != null && elem != undefined
+        );
         const tutors = await Promise.all(
             finalData.map(async (slot) => {
-                const tutor = await StudentModel.findOne({ _id: slot?.studentId });
-                return { student: tutor, slot: slot }
+                const tutor = await StudentModel.findOne({
+                    _id: slot?.studentId,
+                });
+                return { student: tutor, slot: slot };
             })
-        )
-        const finalTutors = tutors.filter((elem) => elem != undefined && elem.student != undefined);
+        );
+        const finalTutors = tutors.filter(
+            (elem) => elem != undefined && elem.student != undefined
+        );
         return res.status(200).json({ data: finalTutors });
     } catch (err: any) {
         logger.warn(

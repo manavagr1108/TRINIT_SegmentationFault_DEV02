@@ -263,6 +263,7 @@ export const bookSlots = async (req: RequestWithAuthenticatedStudent, res: Respo
 
 export const fetchUpcomingSlots = async (req: RequestWithAuthenticatedStudent, res: Response) => {
     try {
+        console.log("called");
         const student = await StudentModel.findById(req.studentId);
         if (!student) {
             return res
