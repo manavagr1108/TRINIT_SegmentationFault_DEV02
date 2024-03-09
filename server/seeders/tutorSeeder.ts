@@ -19,7 +19,7 @@ const seederWorkshop = async () => {
         "English",
         "Hindi",
         "Korean",];
-    const prices = [45, 60, 90];
+
     const experiences = [0, 1, 2];
     const availableTimeZones = ['Morning', 'Afternoon', 'Evening', 'Night'];
 
@@ -28,9 +28,9 @@ const seederWorkshop = async () => {
         for (let j = 0; j < 3; j++) {
             const language = languages[Math.floor(Math.random() * languages.length)];
             const experience = experiences[Math.floor(Math.random() * experiences.length)];
-            const randomPrices = prices.map(minutes => ({ minutes, price: Math.floor(Math.random() * 10000) }));
+            const randomPrice = 5000 + Math.floor(Math.random() * 15000)
 
-            randomLanguages.push({ language, experience, price: randomPrices });
+            randomLanguages.push({ language, experience, price: randomPrice });
         }
 
 

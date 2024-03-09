@@ -98,12 +98,9 @@ export const searchTutor = async (
         if (languages.length > 0) {
             query.languages = {
                 $elemMatch: {
-                    language: { $in: languages }, experience: { $gte: experience }, price: {
-                        $elemMatch: {
-                            price: {
-                                $lte: upperPrice, $gte: lowerPrice
-                            }
-                        }
+                    language: { $in: languages }, experience: { $gte: experience },
+                    price: {
+                        $lte: upperPrice, $gte: lowerPrice
                     }
                 }
             }
@@ -112,11 +109,7 @@ export const searchTutor = async (
                 $elemMatch: {
                     experience: { $gte: experience },
                     price: {
-                        $elemMatch: {
-                            price: {
-                                $lte: upperPrice, $gte: lowerPrice
-                            }
-                        }
+                        $lte: upperPrice, $gte: lowerPrice
                     }
                 }
             }

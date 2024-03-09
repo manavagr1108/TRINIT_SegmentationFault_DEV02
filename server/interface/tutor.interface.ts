@@ -1,13 +1,9 @@
 import { Document, ObjectId } from "mongoose";
 import { Language } from "./interface";
 
-interface PriceList {
-    price: number,
-    minutes: number;
-}
 
 interface LanguagePriceList {
-    price: [PriceList]
+    price: number
     language: string;
     experience: number;
 }

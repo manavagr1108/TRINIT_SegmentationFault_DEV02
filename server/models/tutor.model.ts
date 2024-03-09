@@ -38,7 +38,7 @@ const TutorSchema = new Schema<TutorInterface>({
     },
     languages: {
         type: [
-            { language: String, experience: Number, price: [{ price: Number, minutes: Number }] }
+            { language: String, experience: Number, price: Number }
         ],
         default: []
     }
