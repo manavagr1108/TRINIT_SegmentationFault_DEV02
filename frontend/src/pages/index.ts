@@ -1,3 +1,4 @@
+export { default as Home } from "./Home/Home";
 export { default as FallbackUi } from "./FallbackUI/FallbackUI";
 export { default as StudentLogin } from "./Student/Auth/StudentAuth";
 export { default as TutorLogin } from "./Tutor/Auth/TutorAuth";

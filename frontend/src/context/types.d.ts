@@ -9,6 +9,8 @@ interface AuthContextTypeStudent {
   isLoading: boolean;
   error: boolean;
   isFetched: boolean;
+  isProfileUpdated: boolean;
+  setIsProfileUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface RouteTypeContextInterface {

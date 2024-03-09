@@ -4,7 +4,11 @@ import {
   GoogleCallbackTutor,
   GoogleCallbackStudent,
   StudentLogin,
+  Home,
+  StudentHome,
 } from "../pages";
+import UpdateStudentDetails from "../pages/Student/Home/UpdateStudentDetails";
+import SearchTutor from "../pages/Student/Home/SearchTutor";
 
 export const unprotectedRoutes: RouteType[] = [
   {
@@ -32,9 +36,15 @@ export const unprotectedRoutes: RouteType[] = [
     description: "Login page for tutor",
   },
   {
+    path: "/home",
+    element: <Home />,
+    title: "Home Page",
+    description: "Home page for users",
+  },
+  {
     path: "*",
-    element: <Navigate to="/auth/student" />,
+    element: <Navigate to="/home" />,
     title: "Login",
-    description: "Login page for Student",
+    description: "Login page for users",
   },
 ];

@@ -28,3 +28,15 @@ export const currState = {
 };
 
 export const genders = ["Male", "Female"];
+export const languages = [
+  "Spanish",
+  "German",
+  "Arabic",
+  "Chinese",
+  "Portuguese",
+  "Russian",
+  "French",
+  "English",
+  "Hindi",
+  "Korean",
+];

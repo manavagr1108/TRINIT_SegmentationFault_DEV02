@@ -21,6 +21,7 @@
     "@mantine/form": "^7.6.1",
     "@mantine/hooks": "^7.4.1",
     "@mantine/notifications": "^7.4.1",
+    "@tabler/icons-react": "^2.47.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.5",
     "husky": "^8.0.3",
