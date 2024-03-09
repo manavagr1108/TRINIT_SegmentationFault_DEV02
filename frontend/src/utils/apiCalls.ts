@@ -96,6 +96,23 @@ export const updateUserProfile = async (body: {
   }
 };
 
+export const updateTutorProfile = async (body: {
+  name: string;
+  email: string;
+  gender: string;
+  age: string;
+  languages: any[];
+}) => {
+  try {
+    const response = await CustomAxios.post(`tutor/updateProfile`, body, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+};
+
 export const searchTutor = async (body: {
   languages: string[];
   experience: number;

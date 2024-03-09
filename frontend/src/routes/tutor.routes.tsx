@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import { TutorHome } from "../pages";
+import { TutorHome, TutorUpdateProfile } from "../pages";
 
 export const tutorRoutes: RouteType[] = [
   {
     path: "/tutor/home",
-    element: <TutorHome />,
+    element: <TutorHome children={<TutorUpdateProfile />}></TutorHome>,
     title: "Home",
     description: "Home page for tutor",
   },

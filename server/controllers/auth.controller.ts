@@ -78,7 +78,7 @@ export const tutorLoginGoogle = async (req: Request, res: Response) => {
             { name: tutorDetails.data.name }
         );
         if (!tutor) {
-            const newTutor = await StudentModel.create({
+            const newTutor = await TutorModel.create({
                 email: tutorDetails.data.email,
                 name: tutorDetails.data.name,
             });
@@ -103,7 +103,7 @@ export const tutorLoginGoogle = async (req: Request, res: Response) => {
             })
             .status(200)
             .json({ data: tutor, message: "Logged in successfully" });
-    } catch {
+    } catch(err:any) {
         return res.status(500).json({ message: "Internal server error" });
     }
 };
