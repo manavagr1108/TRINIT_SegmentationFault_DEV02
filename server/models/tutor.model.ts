@@ -38,13 +38,13 @@ const TutorSchema = new Schema<TutorInterface>({
     },
     languages: {
         type: [
-            { language: String, experience: String }
+            { language: String, experience: Number, price: Number }
         ],
         default: []
     },
-    prices: {
-        type: [{ minutes: Number, price: Number }],
-        default: []
+    isAutoApprovalOn: {
+        type: Boolean,
+        default: false
     }
 });
 

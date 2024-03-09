@@ -19,16 +19,20 @@
         "typescript": "^5.3.3"
     },
     "dependencies": {
+        "@mantine/carousel": "^7.6.1",
         "axios": "^1.6.5",
         "body-parser": "^1.20.2",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "dotenv": "^16.3.1",
+        "embla-carousel-react": "^7.1.0",
         "express": "^4.18.2",
         "husky": "^8.0.3",
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.0.4",
         "morgan": "^1.10.0",
+        "razorpay": "^2.9.2",
+        "socket.io": "^4.7.4",
         "winston": "^3.11.0"
     },
     "scripts": {
@@ -38,7 +42,9 @@
         "dev": "nodemon -e .ts --exec \"yarn compile\"",
         "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
         "prepare": "husky install",
-        "checkLogs": "if ! test -d logs;then mkdir logs && touch logs/error.log && touch logs/combined.log && touch logs/warning.log;fi"
+        "checkLogs": "if ! test -d logs;then mkdir logs && touch logs/error.log && touch logs/combined.log && touch logs/warning.log;fi",
+        "seedTutor": "tsc && node build/seeders/tutorSeeder.js",
+        "seedFlashcard": "tsc && node build/seeders/flashcardSeeder.js"
     },
     "lint-staged": {
         "*.{ts,tsx}": [

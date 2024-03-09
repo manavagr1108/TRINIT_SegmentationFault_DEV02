@@ -26,3 +26,25 @@ export const currState = {
   STUDENT: 2,
   UNPROTECTED: 3,
 };
+
+export const genders = ["Male", "Female"];
+export const languages = [
+  "Spanish",
+  "German",
+  "Arabic",
+  "Chinese",
+  "Japanese",
+  "Russian",
+  "French",
+  "English",
+  "Hindi",
+  "Korean",
+];
+export const expArray = ["Low", "Medium", "High"];
+
+export const timeZoneMap: any = {
+  Morning: 540,
+  Afternoon: 900,
+  Evening: 1140,
+  Night: 1320,
+};

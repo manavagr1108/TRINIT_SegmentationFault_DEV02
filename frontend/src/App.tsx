@@ -5,10 +5,13 @@ import "./App.css";
 import { ErrorBoundary } from "react-error-boundary";
 import { FallbackUi } from "./pages";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
 import { BrowserRouter } from "react-router-dom";
 import { RouteTypeContextProvider } from "./context/RouteTypeContext";
+import { SocketProvider } from "./context/SocketContextProvider";
+import '@mantine/carousel/styles.css';
 const App = () => {
   return (
     <ErrorBoundary
@@ -21,7 +24,9 @@ const App = () => {
         <Notifications />
         <BrowserRouter>
           <RouteTypeContextProvider>
-            <Router />
+            <SocketProvider>
+              <Router />
+            </SocketProvider>
           </RouteTypeContextProvider>
         </BrowserRouter>
       </MantineProvider>

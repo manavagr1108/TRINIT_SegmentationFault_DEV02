@@ -5,12 +5,12 @@ import { currState, showNotification } from "../../../utils/helpers";
 import { getGoogleTutorLogin } from "../../../utils/apiCalls";
 import useRouteTypeContext from "../../../context/RouteTypeContext";
 
-const GoogleStudentCallback = () => {
+const GoogleTutorCallback = () => {
   const [queryParams] = useSearchParams();
   const navigate = useNavigate();
   const { setType } = useRouteTypeContext();
 
-  const getStudentDetails = async (code: string) => {
+  const getTutorDetails = async (code: string) => {
     const response = await getGoogleTutorLogin(code);
     if (response.status === 200) {
       showNotification("Success", response.data.message, "success");
@@ -31,7 +31,7 @@ const GoogleStudentCallback = () => {
       navigate("/auth/tutor");
       return;
     }
-    getStudentDetails(queryParams.get("code") as string);
+    getTutorDetails(queryParams.get("code") as string);
   }, []);
   return (
     <>
@@ -40,4 +40,4 @@ const GoogleStudentCallback = () => {
   );
 };
 
-export default GoogleStudentCallback;
+export default GoogleTutorCallback;

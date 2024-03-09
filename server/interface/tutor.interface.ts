@@ -1,20 +1,23 @@
 import { Document, ObjectId } from "mongoose";
 import { Language } from "./interface";
 
-interface PriceList {
-    minutes: number;
-    price: number;
+
+interface LanguagePriceList {
+    price: number
+    language: string;
+    experience: number;
 }
 
 export default interface TutorInterface extends Document {
     email: string;
     name: string;
     id: string;
+    phoneNo: string;
     age: number;
     gender: string;
     classesTaken: [ObjectId];
     isProfileUpdated: boolean;
-    languages: [Language],
+    languages: [LanguagePriceList],
     availableTimeZone: [string],
-    prices: [PriceList],
+    isAutoApprovalOn: boolean;
 }

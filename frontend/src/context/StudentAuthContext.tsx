@@ -13,6 +13,7 @@ export const AuthContextProviderStudent = ({ children }: { children: any }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [fetched, setFetched] = useState<boolean>(false);
+  const [isProfileUpdated, setIsProfileUpdated] = useState<boolean>(false);
   const getLoggedIn = async () => {
     try {
       setLoading(true);
@@ -27,6 +28,7 @@ export const AuthContextProviderStudent = ({ children }: { children: any }) => {
       if (loggedInResponse.status === 200) {
         setLoggedIn(true);
         setStudent(loggedInResponse.data.data);
+        setIsProfileUpdated(loggedInResponse.data.data.isProfileUpdated);
       } else {
         setLoggedIn(false);
         setStudent(undefined);
@@ -52,10 +54,13 @@ export const AuthContextProviderStudent = ({ children }: { children: any }) => {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (location.pathname.includes("/student/")) {
+    if (
+      location.pathname.includes("/student/") &&
+      !location.pathname.includes("/tutor/")
+    ) {
       getLoggedIn();
     }
-  }, []);
+  }, [isProfileUpdated]);
 
   const cachedValue = useMemo(
     () => ({
@@ -64,8 +69,10 @@ export const AuthContextProviderStudent = ({ children }: { children: any }) => {
       isLoading: loading,
       error: error,
       isFetched: fetched,
+      isProfileUpdated: isProfileUpdated,
+      setIsProfileUpdated: setIsProfileUpdated,
     }),
-    [student, loggedIn, loading, error]
+    [student, loggedIn, loading, error, isProfileUpdated, setIsProfileUpdated]
   );
   return (
     <AuthContextStudent.Provider value={cachedValue}>

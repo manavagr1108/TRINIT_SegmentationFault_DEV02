@@ -1,34 +1,29 @@
-import { Flex, Text, Button } from "@mantine/core";
+import { Flex } from "@mantine/core";
+import UpdateTutorDetails from "./UpdateTutorDetails";
+import React from "react";
 import useAuthTutor from "../../../context/TutorAuthContext";
-import { useNavigate } from "react-router-dom";
-import { currState, showNotification } from "../../../utils/helpers";
-import { tutorLogout } from "../../../utils/apiCalls";
-import useRouteTypeContext from "../../../context/RouteTypeContext";
+import Navbar from "../../../components/Navbar/Navbar";
+import { loggedInNavLinks, unprotectedNavLinks } from "../NavLinks/Navlinks";
 
-const Home = () => {
-  const { student } = useAuthTutor();
-  const navigate = useNavigate();
-  const { setType } = useRouteTypeContext();
-  const logout = async () => {
-    const response = await tutorLogout();
-    if (response.status === 200) {
-      showNotification("Success", response.data.message, "success");
-      setType(currState.UNPROTECTED);
-      navigate("/auth/tutor");
-      return;
-    } else {
-      showNotification("Error", response.data.message, "error");
-      return;
-    }
-  };
-
+const Home = ({ children }: { children: React.ReactElement }) => {
+  const { tutor, isProfileUpdated } = useAuthTutor();
+  const cloneChildWithProp = React.cloneElement(children, tutor);
   return (
-    <>
-      <Flex justify="space-between">
-        <Text>Welcome to tutor home {student?.name}</Text>
-        <Button onClick={logout}>Logout</Button>
+    <Flex className="h-[100vh] w-[100vw] justify-start">
+      <Flex className="h-full justify-start">
+        <Navbar
+          loggedInNavLinks={loggedInNavLinks}
+          unprotectedNavLinks={unprotectedNavLinks}
+        />
       </Flex>
-    </>
+      <Flex className="w-full h-full pl-[15rem] py-2 px-10 justify-center items-center">
+        {isProfileUpdated === true ? (
+          cloneChildWithProp
+        ) : (
+          <UpdateTutorDetails {...tutor} />
+        )}
+      </Flex>
+    </Flex>
   );
 };
 
