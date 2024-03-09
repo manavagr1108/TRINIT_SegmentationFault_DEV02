@@ -28,16 +28,17 @@ const seederWorkshop = async () => {
         for (let j = 0; j < 3; j++) {
             const language = languages[Math.floor(Math.random() * languages.length)];
             const experience = experiences[Math.floor(Math.random() * experiences.length)];
-            randomLanguages.push({ language, experience });
+            const randomPrices = prices.map(minutes => ({ minutes, price: Math.floor(Math.random() * 10000) }));
+
+            randomLanguages.push({ language, experience, price: randomPrices });
         }
 
-        const randomPrices = prices.map(minutes => ({ minutes, price: Math.floor(Math.random() * 10000) }));
 
         const randomTimeZones = [];
-        for (let j = 0; j < 2; j++) {
-            const timeZone = availableTimeZones[Math.floor(Math.random() * availableTimeZones.length)];
-            randomTimeZones.push(timeZone);
-        }
+
+        const timeZoneIndex = Math.floor(Math.random() * availableTimeZones.length);
+        randomTimeZones.push(availableTimeZones[timeZoneIndex]);
+        randomTimeZones.push(availableTimeZones[(timeZoneIndex + 1) % availableTimeZones.length]);
 
         const tutor = new TutorModel({
             name: `Tutor ${i + 1}`,
@@ -47,7 +48,6 @@ const seederWorkshop = async () => {
             classesTaken: [], // You can populate this as needed
             availableTimeZone: randomTimeZones,
             languages: randomLanguages,
-            prices: randomPrices
         });
 
         await tutor.save();

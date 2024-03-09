@@ -93,15 +93,31 @@ export const searchTutor = async (
                 .status(404)
                 .json({ message: "Student doesn't exist" });
         }
-        const { language, experience, lowerPrice, upperPrice } = req.body;
+        const { languages, experience, lowerPrice, upperPrice } = req.body;
         let query: any = {};
-        query.prices = { $elemMatch: { price: { $lte: upperPrice, $gte: lowerPrice } } };
-        if (language.length > 0) {
-            query.languages = { $elemMatch: { language: { $in: language }, experience: { $gte: experience } } }
+        if (languages.length > 0) {
+            query.languages = {
+                $elemMatch: {
+                    language: { $in: languages }, experience: { $gte: experience }, price: {
+                        $elemMatch: {
+                            price: {
+                                $lte: upperPrice, $gte: lowerPrice
+                            }
+                        }
+                    }
+                }
+            }
         } else {
             query.languages = {
                 $elemMatch: {
-                    experience: { $gte: experience }
+                    experience: { $gte: experience },
+                    price: {
+                        $elemMatch: {
+                            price: {
+                                $lte: upperPrice, $gte: lowerPrice
+                            }
+                        }
+                    }
                 }
             }
         }

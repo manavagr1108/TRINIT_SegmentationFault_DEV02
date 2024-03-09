@@ -50,7 +50,7 @@ export const updateProfile = async (
                 .status(404)
                 .json({ message: "Student doesn't exist" });
         }
-        const { name, email, gender, age, languages, prices, timezone } = req.body;
+        const { name, email, gender, age, languages, timezone } = req.body;
         if (email != student.email && name != student.name) {
             return res
                 .status(403)
@@ -63,7 +63,6 @@ export const updateProfile = async (
                 age: age,
                 languages: languages || [],
                 isProfileUpdated: true,
-                prices: prices, 
                 availableTimeZone: timezone
             },
         });

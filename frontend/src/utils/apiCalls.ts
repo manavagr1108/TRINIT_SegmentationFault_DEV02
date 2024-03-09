@@ -103,7 +103,7 @@ export const searchTutor = async (body: {
   upperPrice: number
 }) => {
   try {
-    const response = await CustomAxios.post(`student/updateProfile`, body, {
+    const response = await CustomAxios.post(`student/searchTutor`, body, {
       withCredentials: true,
     });
     return response;
