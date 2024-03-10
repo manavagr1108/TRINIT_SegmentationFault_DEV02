@@ -41,6 +41,7 @@ function BookedClasses(data: any) {
       };
     }
   }, [socket, handleJoinRoom]);
+  console.log(classesList);
   return classesList.length === 0 ? (
     <Text>You have no class to attend!</Text>
   ) : (
@@ -53,6 +54,7 @@ function BookedClasses(data: any) {
           <Table.Tr>
             <Table.Th className="text-center">Language</Table.Th>
             <Table.Th className="text-center">Tutor's Name</Table.Th>
+            <Table.Th className="text-center">Date</Table.Th>
             <Table.Th className="text-center">StartTime</Table.Th>
             <Table.Th className="text-center">EndTime</Table.Th>
             <Table.Th className="text-center">Status</Table.Th>
@@ -63,6 +65,13 @@ function BookedClasses(data: any) {
             <Table.Tr className="h-[4rem]" key={i}>
               <Table.Td className=" text-center">{slot.slot.language}</Table.Td>
               <Table.Td className=" text-center">{slot.tutor.name}</Table.Td>
+              <Table.Td className=" text-center">
+                {new Date(slot.slot.date).getDate() +
+                  "/" +
+                  new Date(slot.slot.date).getMonth() +
+                  "/" +
+                  new Date(slot.slot.date).getFullYear()}
+              </Table.Td>
               <Table.Td className=" text-center">
                 {(slot.slot.startTime / 60).toString().padStart(2, "0") +
                   ":" +
