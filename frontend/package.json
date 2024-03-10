@@ -28,6 +28,7 @@
     "axios": "^1.6.5",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^7.1.0",
+    "framer-motion": "^11.0.8",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "postcss-preset-mantine": "^1.12.3",

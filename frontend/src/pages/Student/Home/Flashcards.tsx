@@ -103,7 +103,6 @@ const Flashcards = () => {
 
     const response = await getFlashCards({ typingLanguage, visibleLanguage });
     if (response.status === 200) {
-      console.log(response);
       setVisibleFlashCard(response.data.langVisible);
       setTypingFlashCard(response.data.langTyping);
       return;

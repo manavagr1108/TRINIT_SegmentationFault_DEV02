@@ -4,6 +4,7 @@ import UpdateStudentDetails from "./UpdateStudentDetails";
 import Navbar from "../../../components/Navbar/Navbar";
 import { loggedInNavLinks, unprotectedNavLinks } from "../NavLinks/Navlinks";
 import React from "react";
+import HelpDesk from "./ChatBot";
 
 const Home = ({ children }: { children: React.ReactElement }) => {
   const { student } = useAuthStudent();
@@ -25,6 +26,7 @@ const Home = ({ children }: { children: React.ReactElement }) => {
           <UpdateStudentDetails {...student} />
         )}
       </Flex>
+      <HelpDesk delay={1} />
     </Flex>
   );
 };

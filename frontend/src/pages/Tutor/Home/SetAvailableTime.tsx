@@ -71,7 +71,6 @@ function SetAvailableTime(data: any) {
       };
     }
   }, [socket, handleJoinRoom]);
-  console.log(classesList);
   return (
     <Flex
       direction="column"
@@ -96,6 +95,7 @@ function SetAvailableTime(data: any) {
               <Table.Tr>
                 <Table.Th className="text-center">Language</Table.Th>
                 <Table.Th className="text-center">Students's Name</Table.Th>
+                <Table.Th className="text-center">Date</Table.Th>
                 <Table.Th className="text-center">StartTime</Table.Th>
                 <Table.Th className="text-center">EndTime</Table.Th>
                 <Table.Th className="text-center">Status</Table.Th>
@@ -110,6 +110,13 @@ function SetAvailableTime(data: any) {
                   </Table.Td>
                   <Table.Td className=" text-center">
                     {slot.student.name}
+                  </Table.Td>
+                  <Table.Td className=" text-center">
+                    {new Date(slot.slot.date).getDate() +
+                      "/" +
+                      new Date(slot.slot.date).getMonth() +
+                      "/" +
+                      new Date(slot.slot.date).getFullYear()}
                   </Table.Td>
                   <Table.Td className=" text-center">
                     {(slot.slot.startTime / 60).toString().padStart(2, "0") +

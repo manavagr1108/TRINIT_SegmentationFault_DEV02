@@ -7,7 +7,7 @@ import RoomPage from "../pages/Tutor/Home/TutorRoom";
 export const tutorRoutes: RouteType[] = [
   {
     path: "/tutor/room/:room_id",
-    element: <RoomPage />,
+    element: <TutorHome children={<RoomPage />}></TutorHome>,
     title: "Home",
     description: "Home page for tutor",
   },

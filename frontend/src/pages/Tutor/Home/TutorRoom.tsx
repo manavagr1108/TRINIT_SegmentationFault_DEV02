@@ -2,6 +2,7 @@ import { useEffect, useCallback, useState } from "react";
 import ReactPlayer from "react-player";
 import { PeerService } from "../../../service/peer";
 import { useSocket } from "../../../context/SocketContextProvider";
+import { Button, Flex, Text } from "@mantine/core";
 
 const RoomPage = () => {
   const peer = new PeerService();
@@ -128,32 +129,60 @@ const RoomPage = () => {
     handleNegoNeedIncomming,
     handleNegoNeedFinal,
   ]);
-
   return (
-    <div>
-      <h1>Room Page</h1>
-      <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
-      {myStream && <button onClick={sendStreams}>Send Stream</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
+    <Flex className="flex-col items-center justify-center gap-5 self-start">
+      <Text fw={700} size="xl">
+        Video Calling
+      </Text>
+      <Text fw={300} size="md">
+        {remoteSocketId ? "Connected" : "No one in room"}
+      </Text>
       {myStream && (
-        <>
-          <h1>My Stream</h1>
-          <ReactPlayer
-            playing
-            muted
-            height="100px"
-            width="200px"
-            url={myStream}
-          />
-        </>
+        <Button
+          variant="subtle"
+          color="indigo"
+          className="hover:border-2 border-indigo-500"
+          onClick={sendStreams}
+        >
+          Send Stream
+        </Button>
       )}
-      {remoteStream && (
-        <>
-          <h1>Remote Stream</h1>
-          <ReactPlayer playing url={remoteStream} />
-        </>
+      {remoteSocketId && (
+        <Button
+          variant="subtle"
+          color="indigo"
+          className="hover:border-2 border-indigo-500"
+          onClick={handleCallUser}
+        >
+          CALL
+        </Button>
       )}
-    </div>
+      <Flex className="w-full justify-around">
+        {myStream && (
+          <Flex className="flex-col justify-center items-center">
+            <Text>My Stream</Text>
+            <ReactPlayer
+              playing
+              muted
+              height="60vh"
+              width="80vw"
+              url={myStream}
+            />
+          </Flex>
+        )}
+        {remoteStream && (
+          <Flex className="flex-col">
+            <Text>Remote Stream</Text>
+            <ReactPlayer
+              height="60vh"
+              width="80vw"
+              playing
+              url={remoteStream}
+            />
+          </Flex>
+        )}
+      </Flex>
+    </Flex>
   );
 };
 
