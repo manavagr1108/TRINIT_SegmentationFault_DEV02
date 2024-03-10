@@ -4,6 +4,7 @@ import React from "react";
 import useAuthTutor from "../../../context/TutorAuthContext";
 import Navbar from "../../../components/Navbar/Navbar";
 import { loggedInNavLinks, unprotectedNavLinks } from "../NavLinks/Navlinks";
+import HelpDesk from "./ChatBot";
 
 const Home = ({ children }: { children: React.ReactElement }) => {
   const { tutor, isProfileUpdated } = useAuthTutor();
@@ -23,6 +24,8 @@ const Home = ({ children }: { children: React.ReactElement }) => {
           <UpdateTutorDetails {...tutor} />
         )}
       </Flex>
+      <HelpDesk delay={1} />
+
     </Flex>
   );
 };

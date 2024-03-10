@@ -3,6 +3,8 @@ import { Response } from "express";
 import { FlashcardModel, PaymentModel, SlotModel, StudentModel, TutorModel } from "../models";
 import logger from "../utils/logger";
 import { isValidObjectId } from "mongoose";
+import axios from "axios";
+import config from "../config/config";
 
 export const getCurrentStudentDetails = async (
     req: RequestWithAuthenticatedStudent,
@@ -330,3 +332,91 @@ export const fetchFlashCards = async (req: RequestWithAuthenticatedStudent, res:
         return res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export const generateChat1 = async (req: RequestWithAuthenticatedStudent, res: Response) => {
+    try {
+        const student = await StudentModel.findById(req.studentId);
+        if (!student) {
+            return res
+                .cookie("token", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        const { chat } = req.body;
+        const resp = await axios({ method: "post", url: config.pythonNotebook + "/chat", data: { chat: chat } });
+        return res.status(200).json({ data: resp });
+    } catch (err: any) {
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const generateChat2 = async (req: RequestWithAuthenticatedStudent, res: Response) => {
+    try {
+        const student = await StudentModel.findById(req.studentId);
+        if (!student) {
+            return res
+                .cookie("token", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        const { chat } = req.body;
+        const resp = await axios({ method: "post", url: config.pythonNotebook + "/recommendTutor", data: { query: chat } });
+        return res.status(200).json({ data: resp });
+    } catch (err: any) {
+
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const generateChat3 = async (req: RequestWithAuthenticatedStudent, res: Response) => {
+    try {
+        const student = await StudentModel.findById(req.studentId);
+        if (!student) {
+            return res
+                .cookie("token", "", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                    path: "/",
+                })
+                .status(404)
+                .json({ message: "Student doesn't exist" });
+        }
+        const { chat } = req.body;
+        const resp = await axios({ method: "post", url: config.pythonNotebook + "/queryTutor", data: { query: chat } });
+        return res.status(200).json({ data: resp });
+    } catch (err: any) {
+
+        logger.warn(
+            JSON.stringify({
+                message: err.message,
+                trace: "fetchTutorSlotsOfDate",
+            })
+        );
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+

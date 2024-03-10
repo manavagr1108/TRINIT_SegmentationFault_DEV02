@@ -71,7 +71,6 @@ function SetAvailableTime(data: any) {
       };
     }
   }, [socket, handleJoinRoom]);
-  console.log(classesList);
   return (
     <Flex
       direction="column"

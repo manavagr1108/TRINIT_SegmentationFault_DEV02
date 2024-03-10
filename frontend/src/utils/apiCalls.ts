@@ -241,9 +241,42 @@ export const toggleApprovalOfMeet = async (slotId: string) => {
   }
 }
 
-export const getFlashCards = async (body:any) => {
+export const getFlashCards = async (body: any) => {
   try {
     const response = await CustomAxios.post(`student/getFlashCards`, body, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
+
+export const tutorRecommendation = async (chat: string) => {
+  try {
+    const response = await CustomAxios.post(`student/tutorRecommendationAI`, { chat: chat }, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
+
+export const fetchTutorDetails = async (chat: string) => {
+  try {
+    const response = await CustomAxios.post(`student/fetchTutorDetailsAI`, { chat: chat }, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (e: any) {
+    return e.response;
+  }
+}
+
+export const languageQuestionAnswer = async (chat: string) => {
+  try {
+    const response = await CustomAxios.post(`student/languageQuestionAnswerAI`, { chat: chat }, {
       withCredentials: true,
     });
     return response;

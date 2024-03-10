@@ -41,7 +41,6 @@ function BookedClasses(data: any) {
       };
     }
   }, [socket, handleJoinRoom]);
-  console.log(classesList);
   return classesList.length === 0 ? (
     <Text>You have no class to attend!</Text>
   ) : (

@@ -5,6 +5,8 @@ import {
     fetchBookedTutorSlotsOfDate,
     fetchFlashCards,
     fetchUpcomingSlots,
+    generateChat1,
+    generateChat3,
     getCurrentStudentDetails,
     searchTutor,
     updateProfile,
@@ -19,5 +21,10 @@ studentRouter.post("/fetchTutorSlots", fetchBookedTutorSlotsOfDate);
 studentRouter.post("/bookSlot", bookSlots);
 studentRouter.get("/getUpcomingClasses", fetchUpcomingSlots);
 studentRouter.post("/getFlashCards", fetchFlashCards);
+studentRouter.post("/tutorRecommendationAI", fetchFlashCards);
+studentRouter.post("/fetchTutorDetailsAI", generateChat3);
+studentRouter.post("/languageQuestionAnswerAI", generateChat1
+);
+
 
 export default studentRouter;

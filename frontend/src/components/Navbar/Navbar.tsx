@@ -25,7 +25,6 @@ const Navbar = ({
     const { student } = useAuthStudent();
     user = student;
   }
-  console.log(isLoggedIn, isProfileUpdated);
   const navigate = useNavigate();
   const { setType } = useRouteTypeContext();
   const logout = async () => {
@@ -41,8 +40,6 @@ const Navbar = ({
     }
   };
   const handleDarkToogle = (e: any) => {
-    console.log(e.target.classList);
-    console.log(document.body.classList.value.includes("dark"));
     if (e.target.classList.value.includes("translate-x-10")) {
       document.body.classList.remove("dark");
       e.target.classList.remove("translate-x-10");
